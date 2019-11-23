@@ -33,16 +33,13 @@ public class Main{
 			length = Character.getNumericValue(values[3]);
 			
 			
-			switch(orientacion) {
-				case 'N':
-					getWord(x, y, 0, length, letras);
-			}
+			
 			System.out.println(letras[y][x]);
 		}
 		
 	}
 
-	private static String getWord(int x, int y, int lengthx, int lengthy, char[][] letras) {
+	/*private static String getWord(int x, int y, int lengthx, int lengthy, char[][] letras) {
 		String word = "";
 		
 		for(int i=x; i<lengthx; i++) {
@@ -54,7 +51,7 @@ public class Main{
 		
 		return null;
 		
-	}
+	}*/
 
 	private static char [] readValue(String coords) {
 		char [] values = new char [4];
