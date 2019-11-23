@@ -35,24 +35,49 @@ public class Main{
 			
 			switch(orientacion) {
 				case 'N':
-					getWord(x, y, 0, length, letras);
+					System.out.println(getWord(x, y, 0, length, letras, orientacion));
+					break;
+				case 'S':
+					System.out.println(getWord(x, y, 0, length, letras, orientacion));
+					break;
+				case 'O':
+					System.out.println(getWord(x, y, length, 0, letras, orientacion));
+					break;
+				case 'E':
+					System.out.println(getWord(x, y, length, 0, letras, orientacion));
+					break;
 			}
-			System.out.println(letras[y][x]);
 		}
 		
 	}
 
-	private static String getWord(int x, int y, int lengthx, int lengthy, char[][] letras) {
+	private static String getWord(int x, int y, int lengthx, int lengthy, char[][] letras, char orientacion) {
 		String word = "";
 		
-		for(int i=x; i<lengthx; i++) {
-			for(int j=y; j<lengthy; j++) {
-				word += letras[i][j];
-				
-			}
+		switch(orientacion) {
+		case 'N':
+			for(int i=y; i>y-lengthy; i--) {
+				word += letras[i][x];	
+				}
+			break;
+		case 'S':
+			for(int i=y; i<lengthy+y; i++) {
+				word += letras[i][x];	
+				}
+			break;
+		case 'O':
+			for(int i=x; i>x-lengthx; i--) {
+				word += letras[y][i];	
+				}
+			break;
+		case 'E':
+			for(int i=x; i<lengthx+x; i++) {
+				word += letras[y][i];	
+				}
+			break;
 		}
 		
-		return null;
+		return word;
 		
 	}
 
