@@ -39,19 +39,7 @@ public class Main{
 		
 	}
 
-	/*private static String getWord(int x, int y, int lengthx, int lengthy, char[][] letras) {
-		String word = "";
-		
-		for(int i=x; i<lengthx; i++) {
-			for(int j=y; j<lengthy; j++) {
-				word += letras[i][j];
-				
-			}
-		}
-		
-		return null;
-		
-	}*/
+
 
 	private static char [] readValue(String coords) {
 		char [] values = new char [4];
