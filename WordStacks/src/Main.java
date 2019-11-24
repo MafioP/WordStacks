@@ -28,13 +28,15 @@ public class Main{
 			orientacion = values[2];
 			length = Character.getNumericValue(values[3]);
 			
-			System.out.println(getWord(x, y, length, letras, orientacion));
 			String wordGuess = getWord(x, y, length, letras, orientacion);
+			System.out.println(wordGuess);
 			
 			//comparar si wordGuess esta en la lista de palabras
-			for(int i=0; i<listaPalabras.length || i<listaPrueba.length; i++) {
-				if(wordGuess == listaPalabras[i]) {
+			for(int i=0; i<listaPalabras.length; i++) {
+				System.out.println(listaPalabras[i]);
+				if(listaPalabras[i].equals(wordGuess)) {
 					listaPalabras[i] = null;
+					System.out.println(wordGuess + " esta en la lista de palabras");
 				}else if( listaPrueba[i] == wordGuess) {
 					listaPrueba[i] = null;
 				}
