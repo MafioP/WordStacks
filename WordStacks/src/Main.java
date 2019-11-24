@@ -32,7 +32,7 @@ public class Main{
 			orientacion = values[2];
 			length = Character.getNumericValue(values[3]);
 			
-			
+		
 			switch(orientacion) {
 				case 'N':
 					System.out.println(getWord(x, y, 0, length, letras, orientacion));
@@ -47,9 +47,11 @@ public class Main{
 					System.out.println(getWord(x, y, length, 0, letras, orientacion));
 					break;
 			}
+
 		}
 		
 	}
+
 
 	private static String getWord(int x, int y, int lengthx, int lengthy, char[][] letras, char orientacion) {
 		String word = "";
@@ -80,6 +82,7 @@ public class Main{
 		return word;
 		
 	}
+
 
 	private static char [] readValue(String coords) {
 		char [] values = new char [4];
