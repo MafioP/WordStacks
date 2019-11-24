@@ -5,7 +5,7 @@ public class Diccionario {
 		return listapalabras;
 	}
 	public static String[] listaPrubea() {
-		String [] listaprueba = {""};
+		String [] listaprueba = {"aaaa"};
 		return listaprueba;
 	}
 	public static String[] listaNormal() { // 10 palabras aleatorias de diccionario
