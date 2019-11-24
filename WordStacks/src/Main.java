@@ -7,22 +7,18 @@ public class Main{
 		int x, y, length;
 		char orientacion;
 		char [][] letras = new char [10][10];
-		String coords;
 		char [] values = new char[4];
 		Scanner in = new Scanner(System.in);
-		String [] listaPrueba = {"AAA", "AAAAAA", "BBBBBBBBB", "CCCC",
-				"DDDDD", "EEEEE", "FFFFF", "GGGGG",
-				"HHHHH", "IIIII", "JJJJJ"};
-		String [] listaPalabras = {"AAA", "AAAAAA", "BBBBBBBBB", "CCCCC",
-				"DDDDD", "EEEEE", "FFFFF", "GGGGG",
-				"HHHHH", "IIIII", "JJJJJ"};
+		String [] listaPrueba = {"AAA", "AAAAAA", "BBBBBBBBB", "CCCC","DDDDD", "EEEEE", "FFFFF", "GGGGG","HHHHH", "IIIII", "JJJJJ"};
+		String [] listaPalabras = {"AAA", "AAAAAA", "BBBBBBBBB", "CCCCC", "DDDDD", "EEEEE", "FFFFF", "GGGGG", "HHHHH", "IIIII", "JJJJJ"};
 		
 		letras = init(modo, listaPrueba, listaPalabras);
 		
 		while(listaPalabras.length>0 || listaPrueba.length>0) {
 			System.out.println("introduzca las coordenadas de la palabra de la forma x, y, orientacion, longitud. Por ejemplo 42N7");
 			
-			coords = in.next();
+			//lee las coordenadas de la palabra
+			String coords = in.next();
 			values = readValue(coords);
 			
 			
@@ -32,48 +28,43 @@ public class Main{
 			orientacion = values[2];
 			length = Character.getNumericValue(values[3]);
 			
-		
-			switch(orientacion) {
-				case 'N':
-					System.out.println(getWord(x, y, 0, length, letras, orientacion));
-					break;
-				case 'S':
-					System.out.println(getWord(x, y, 0, length, letras, orientacion));
-					break;
-				case 'O':
-					System.out.println(getWord(x, y, length, 0, letras, orientacion));
-					break;
-				case 'E':
-					System.out.println(getWord(x, y, length, 0, letras, orientacion));
-					break;
+			System.out.println(getWord(x, y, length, letras, orientacion));
+			String wordGuess = getWord(x, y, length, letras, orientacion);
+			
+			//comparar si wordGuess esta en la lista de palabras
+			for(int i=0; i<listaPalabras.length || i<listaPrueba.length; i++) {
+				if(wordGuess == listaPalabras[i]) {
+					listaPalabras[i] = null;
+				}else if( listaPrueba[i] == wordGuess) {
+					listaPrueba[i] = null;
+				}
 			}
-
 		}
 		
 	}
 
 
-	private static String getWord(int x, int y, int lengthx, int lengthy, char[][] letras, char orientacion) {
+	private static String getWord(int x, int y, int length, char[][] letras, char orientacion) {
 		String word = "";
 		
 		switch(orientacion) {
 		case 'N':
-			for(int i=y; i>y-lengthy; i--) {
+			for(int i=y; i>y-length; i--) {
 				word += letras[i][x];	
 				}
 			break;
 		case 'S':
-			for(int i=y; i<lengthy+y; i++) {
+			for(int i=y; i<length+y; i++) {
 				word += letras[i][x];	
 				}
 			break;
 		case 'O':
-			for(int i=x; i>x-lengthx; i--) {
+			for(int i=x; i>x-length; i--) {
 				word += letras[y][i];	
 				}
 			break;
 		case 'E':
-			for(int i=x; i<lengthx+x; i++) {
+			for(int i=x; i<length+x; i++) {
 				word += letras[y][i];	
 				}
 			break;
