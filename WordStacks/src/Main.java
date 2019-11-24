@@ -10,7 +10,7 @@ public class Main{
 		String coords;
 		char [] values = new char[4];
 		Scanner in = new Scanner(System.in);
-		String [] listaPrueba = {"AAA", "AAAAAA", "BBBBBBBBB", "COCK",
+		String [] listaPrueba = {"AAA", "AAAAAA", "BBBBBBBBB", "CCCC",
 				"DDDDD", "EEEEE", "FFFFF", "GGGGG",
 				"HHHHH", "IIIII", "JJJJJ"};
 		String [] listaPalabras = {"AAA", "AAAAAA", "BBBBBBBBB", "CCCCC",
