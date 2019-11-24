@@ -32,13 +32,56 @@ public class Main{
 			orientacion = values[2];
 			length = Character.getNumericValue(values[3]);
 			
-			
-			
-			System.out.println(letras[y][x]);
+		
+			switch(orientacion) {
+				case 'N':
+					System.out.println(getWord(x, y, 0, length, letras, orientacion));
+					break;
+				case 'S':
+					System.out.println(getWord(x, y, 0, length, letras, orientacion));
+					break;
+				case 'O':
+					System.out.println(getWord(x, y, length, 0, letras, orientacion));
+					break;
+				case 'E':
+					System.out.println(getWord(x, y, length, 0, letras, orientacion));
+					break;
+			}
+
 		}
 		
 	}
 
+
+	private static String getWord(int x, int y, int lengthx, int lengthy, char[][] letras, char orientacion) {
+		String word = "";
+		
+		switch(orientacion) {
+		case 'N':
+			for(int i=y; i>y-lengthy; i--) {
+				word += letras[i][x];	
+				}
+			break;
+		case 'S':
+			for(int i=y; i<lengthy+y; i++) {
+				word += letras[i][x];	
+				}
+			break;
+		case 'O':
+			for(int i=x; i>x-lengthx; i--) {
+				word += letras[y][i];	
+				}
+			break;
+		case 'E':
+			for(int i=x; i<lengthx+x; i++) {
+				word += letras[y][i];	
+				}
+			break;
+		}
+		
+		return word;
+		
+	}
 
 
 	private static char [] readValue(String coords) {
