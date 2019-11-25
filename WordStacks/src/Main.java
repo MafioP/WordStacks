@@ -2,6 +2,7 @@ import java.io.IOException;
 import java.util.Scanner;
 
 public class Main{
+	
 	public static void main(String[] args) {
 		char modo = 0;
 		int x, y, length;
@@ -34,7 +35,7 @@ public class Main{
 			//comparar si wordGuess esta en la lista de palabras
 			for(int i=0; i<listaPalabras.length; i++) {
 				System.out.println(listaPalabras[i]);
-				if(listaPalabras[i].equals(wordGuess)) {
+				if (listaPalabras[i].equals(wordGuess)) {
 					listaPalabras[i] = null;
 					System.out.println(wordGuess + " esta en la lista de palabras");
 				}else if( listaPrueba[i] == wordGuess) {
@@ -45,7 +46,15 @@ public class Main{
 		
 	}
 
-
+	/**
+	 * 
+	 * @param x
+	 * @param y
+	 * @param length
+	 * @param letras
+	 * @param orientacion
+	 * @return
+	 */
 	private static String getWord(int x, int y, int length, char[][] letras, char orientacion) {
 		String word = "";
 		
