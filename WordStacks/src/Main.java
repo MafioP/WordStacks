@@ -9,9 +9,12 @@ public class Main{
 		char orientacion;
 		char [][] letras = new char [10][10];
 		char [] values = new char[4];
+		
 		Scanner in = new Scanner(System.in);
+		Diccionario diccionario = new Diccionario();
 		String [] listaPrueba = {"AAA", "AAAAAA", "BBBBBBBBB", "CCCC","DDDDD", "EEEEE", "FFFFF", "GGGGG","HHHHH", "IIIII", "JJJJJ"};
-		String [] listaPalabras = {"AAA", "AAAAAA", "BBBBBBBBB", "CCCCC", "DDDDD", "EEEEE", "FFFFF", "GGGGG", "HHHHH", "IIIII", "JJJJJ"};
+		String [] listaPalabras = diccionario.listaNormal();
+
 		
 		letras = init(modo, listaPrueba, listaPalabras);
 		
@@ -60,14 +63,14 @@ public class Main{
 		
 		switch(orientacion) {
 		case 'N':
-			for(int i=y; i>y-length; i--) {
+			for (int i=y; i>y-length; i--) {
 				word += letras[i][x];	
-				}
+			}
 			break;
 		case 'S':
-			for(int i=y; i<length+y; i++) {
+			for (int i = y; i < length + y; i++) {
 				word += letras[i][x];	
-				}
+			}
 			break;
 		case 'O':
 			for(int i=x; i>x-length; i--) {
