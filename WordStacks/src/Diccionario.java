@@ -20,11 +20,11 @@ public class Diccionario {
 			
 			rand = (int)Math.floor(Math.random()*listanormal.length);
 			palabras[i] = listanormal[rand];
-			for(j=1;j<1;j++){
+			
 				
 			}
 			
-		}
+		
 		return palabras;
 	}
 }
