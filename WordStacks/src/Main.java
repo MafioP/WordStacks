@@ -1,7 +1,7 @@
 import java.io.IOException;
 import java.util.Scanner;
 
-public class Main{
+public class Main {
 	
 	public static void main(String[] args) {
 		char modo = 0;
@@ -18,12 +18,13 @@ public class Main{
 		
 		letras = init(modo, listaPrueba, listaPalabras);
 		
-		while(listaPalabras.length>0 || listaPrueba.length>0) {
+		while (listaPalabras.length>0 || listaPrueba.length>0) {
 			System.out.println("introduzca las coordenadas de la palabra de la forma x, y, orientacion, longitud. Por ejemplo 42N7");
 			
 			//lee las coordenadas de la palabra
 			String coords = in.next();
 			values = readValue(coords);
+			System.out.println("coordenadas" + coords);
 			
 			
 			//leer los caracteres y convertirlos a int si es necesario
@@ -33,28 +34,27 @@ public class Main{
 			length = Character.getNumericValue(values[3]);
 			
 			String wordGuess = getWord(x, y, length, letras, orientacion);
-			letras = wordRemove(letras, x, y, length, orientacion); //eliminar la palabra de la tabla
 			System.out.println(wordGuess);
 			
 			//comparar si wordGuess esta en la lista de palabras
-			for(int i=0; i<listaPalabras.length; i++) {
+			for (int i=0; i<listaPalabras.length; i++) {
 				System.out.println(listaPalabras[i]);
 				if (listaPalabras[i].equals(wordGuess)) {
 					listaPalabras[i] = null;
 					System.out.println(wordGuess + " esta en la lista de palabras");
-				}else if( listaPrueba[i] == wordGuess) {
+				}else if ( listaPrueba[i] == wordGuess) {
 					listaPrueba[i] = null;
 				}
 			}
+			letras = wordRemove(letras, x, y, length, orientacion); //eliminar la palabra de la tabla
 		}
-		
 	}
 
 
 	private static String getWord(int x, int y, int length, char[][] letras, char orientacion) {
 		String word = "";
 		
-		switch(orientacion) {
+		switch (orientacion) {
 		case 'N':
 			for (int i=y; i>y-length; i--) {
 				word += letras[i][x];	
@@ -66,12 +66,12 @@ public class Main{
 			}
 			break;
 		case 'O':
-			for(int i=x; i>x-length; i--) {
+			for (int i=x; i>x-length; i--) {
 				word += letras[y][i];	
 				}
 			break;
 		case 'E':
-			for(int i=x; i<length+x; i++) {
+			for (int i=x; i<length+x; i++) {
 				word += letras[y][i];	
 				}
 			break;
@@ -80,26 +80,42 @@ public class Main{
 		return word;
 		
 	}
+	
 	private static char [][] wordRemove(char [][] letras, int x, int y, int length, char orientacion) {
-		switch(orientacion) {
+		switch (orientacion) {
 		case 'N':
 			for (int i=y; i>y-length; i--) {
 				letras [i][x]= letras[i+(y-length-2)][x];	
 			}
-			letras = gravity(letras);
 			break;
-		case 'E':
-			for(int j=y; j>0; j--) {
-				for(int i=x; i<length+x; i++) {
-					letras [j][i]= letras[j-1][i];	
+		case 'O':
+			for (int j=y; j>=0; j--) {
+				for(int i=x; i>x-length; i--) {
+					if(j==0) {
+						letras[j][i] = '\0';
+					}else {
+						letras[j][i]= letras[j-1][i];	
+					}
 				}
 			}
-			letras = gravity(letras);
+			break;
+		case 'E':
+			for(int j=y; j>=0; j--) {
+				for(int i=x; i<length+x; i++) {
+					if(j==0) {
+						letras[j][i] = '\0';
+					}else {
+						letras [j][i]= letras[j-1][i];	
+					}
+				}
+			}
 			break;
 		}
+		gravity(letras);
 		return letras;
 	}
-	private static char[][] gravity(char[][] letras){
+	
+	private static void gravity(char[][] letras) {
 		System.out.println("   0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9");
 		for (int i = 0; i<10; i++) {
 			System.out.print(i + "|" + " ");
@@ -110,7 +126,6 @@ public class Main{
 		}
 		System.out.println("   0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9");
 		
-		return null;
 	}
 
 
