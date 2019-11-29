@@ -33,6 +33,7 @@ public class Main{
 			length = Character.getNumericValue(values[3]);
 			
 			String wordGuess = getWord(x, y, length, letras, orientacion);
+			letras = wordRemove(letras, x, y, length, orientacion); //eliminar la palabra de la tabla
 			System.out.println(wordGuess);
 			
 			//comparar si wordGuess esta en la lista de palabras
@@ -49,15 +50,7 @@ public class Main{
 		
 	}
 
-	/**
-	 * 
-	 * @param x
-	 * @param y
-	 * @param length
-	 * @param letras
-	 * @param orientacion
-	 * @return
-	 */
+
 	private static String getWord(int x, int y, int length, char[][] letras, char orientacion) {
 		String word = "";
 		
@@ -86,6 +79,38 @@ public class Main{
 		
 		return word;
 		
+	}
+	private static char [][] wordRemove(char [][] letras, int x, int y, int length, char orientacion) {
+		switch(orientacion) {
+		case 'N':
+			for (int i=y; i>y-length; i--) {
+				letras [i][x]= letras[i+(y-length-2)][x];	
+			}
+			letras = gravity(letras);
+			break;
+		case 'E':
+			for(int j=y; j>0; j--) {
+				for(int i=x; i<length+x; i++) {
+					letras [j][i]= letras[j-1][i];	
+				}
+			}
+			letras = gravity(letras);
+			break;
+		}
+		return letras;
+	}
+	private static char[][] gravity(char[][] letras){
+		System.out.println("   0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9");
+		for (int i = 0; i<10; i++) {
+			System.out.print(i + "|" + " ");
+			for (int j = 0; j<10; j++) {
+				System.out.print(letras[i][j] + "   ");
+			}
+			System.out.println("|" + i);
+		}
+		System.out.println("   0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9");
+		
+		return null;
 	}
 
 
@@ -129,4 +154,5 @@ public class Main{
 		System.out.println("   0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9");
 		return matriz;
 	}
+	
 }
