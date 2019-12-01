@@ -2,15 +2,19 @@ import java.io.IOException;
 import java.util.Scanner;
 
 public class Main{
+	
 	public static void main(String[] args) {
 		char modo = 0;
 		int x, y, length;
 		char orientacion;
 		char [][] letras = new char [10][10];
 		char [] values = new char[4];
+		
 		Scanner in = new Scanner(System.in);
+		Diccionario diccionario = new Diccionario();
 		String [] listaPrueba = {"AAA", "AAAAAA", "BBBBBBBBB", "CCCC","DDDDD", "EEEEE", "FFFFF", "GGGGG","HHHHH", "IIIII", "JJJJJ"};
-		String [] listaPalabras = {"AAA", "AAAAAA", "BBBBBBBBB", "CCCCC", "DDDDD", "EEEEE", "FFFFF", "GGGGG", "HHHHH", "IIIII", "JJJJJ"};
+		String [] listaPalabras = diccionario.listaNormal();
+
 		
 		letras = init(modo, listaPrueba, listaPalabras);
 		
@@ -28,13 +32,15 @@ public class Main{
 			orientacion = values[2];
 			length = Character.getNumericValue(values[3]);
 			
-			System.out.println(getWord(x, y, length, letras, orientacion));
 			String wordGuess = getWord(x, y, length, letras, orientacion);
+			System.out.println(wordGuess);
 			
 			//comparar si wordGuess esta en la lista de palabras
-			for(int i=0; i<listaPalabras.length || i<listaPrueba.length; i++) {
-				if(wordGuess == listaPalabras[i]) {
+			for(int i=0; i<listaPalabras.length; i++) {
+				System.out.println(listaPalabras[i]);
+				if (listaPalabras[i].equals(wordGuess)) {
 					listaPalabras[i] = null;
+					System.out.println(wordGuess + " esta en la lista de palabras");
 				}else if( listaPrueba[i] == wordGuess) {
 					listaPrueba[i] = null;
 				}
@@ -43,20 +49,28 @@ public class Main{
 		
 	}
 
-
+	/**
+	 * 
+	 * @param x
+	 * @param y
+	 * @param length
+	 * @param letras
+	 * @param orientacion
+	 * @return
+	 */
 	private static String getWord(int x, int y, int length, char[][] letras, char orientacion) {
 		String word = "";
 		
 		switch(orientacion) {
 		case 'N':
-			for(int i=y; i>y-length; i--) {
+			for (int i=y; i>y-length; i--) {
 				word += letras[i][x];	
-				}
+			}
 			break;
 		case 'S':
-			for(int i=y; i<length+y; i++) {
+			for (int i = y; i < length + y; i++) {
 				word += letras[i][x];	
-				}
+			}
 			break;
 		case 'O':
 			for(int i=x; i>x-length; i--) {

@@ -10,6 +10,7 @@ public class Diccionario {
 				"HHHHH", "IIIII", "JJJJJ"};
 		return listaprueba;
 	}
+
 	public static String[] listaNormal(String [] listapalabras) { // 10 palabras aleatorias de diccionario
 	
 		String [] listanormal = diccionario();
@@ -25,6 +26,11 @@ public class Diccionario {
 			}
 			
 		
-		return palabras;
+	}}return palabras;
+
+	public static String[] listaNormal() { // 10 palabras aleatorias de diccionario
+		String [] listanormal = {"ORDENADOR", "MONITOR", "TECLADO", "RATON", "ALTAVOZ", "DISCO", "GRAFICA", "PROGRAMA", "CODIGO", "ALGORITMO"};
+		return listanormal;
+
 	}
 }
