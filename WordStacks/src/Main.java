@@ -84,8 +84,21 @@ public class Main {
 	private static char [][] wordRemove(char [][] letras, int x, int y, int length, char orientacion) {
 		switch (orientacion) {
 		case 'N':
-			for (int i=y; i>y-length; i--) {
-				letras [i][x]= letras[i+(y-length-2)][x];	
+			for (int i=y; i>=0; i--) {
+				if(i-length>=0) {
+					letras[i][x] = letras[i-length][x];
+				}else {
+					letras[i][x] = '\0';
+				}
+			}
+			break;
+		case 'S':
+			for (int i=y+length-1; i>=0; i--) {
+				if(i-length>=0) {
+					letras[i][x] = letras[i-length][x];
+				}else {
+					letras[i][x] = '\0';
+				}
 			}
 			break;
 		case 'O':
