@@ -4,41 +4,30 @@ import java.util.Arrays;
 import java.util.Random;
 
 
+
 public class Testing {
 	
 	public static final int SIZE = 20;
 	private static boolean debug = !true;
 
 	public static void main(String[] args) {
-		int[] order = new int [SIZE];
-		int check, counter = 0;
-		int count = 0;
-		
-		check = randomInt();
-		order[count++] = check;
-		
-		while (count < SIZE) {
-			check = randomInt();
-			boolean exist = false;
-			for (int i = 0; i < count; i++) {
-				if (order[i] == check) {
-					exist = true;
-					break;
-				} 
+		String [] listaPalabras = {"AAA", "AAAAAA", "BBBBBBBBB", "CCCCC",
+				"DDDDD", "EEEEE", "FFFFF", "GGGGG",
+				"HHHHH", "IIIII", "JJJJJ"};
+		generateMatriz(listaPalabras);
+	}
+	private static char[][] generateMatriz(String[] tipoLista) {
+		char [][] matriz = MatrizGenerator.generateMatriz (10, 10, tipoLista);
+		System.out.println("   0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9");
+		for (int i = 0; i<10; i++) {
+			System.out.print(i + "|" + " ");
+			for (int j = 0; j<10; j++) {
+				System.out.print(matriz[i][j] + "   ");
 			}
-			
-			counter ++;
-			
-			if (!exist) {
-				//System.out.println("desigual");
-				order[count] = check;
-				System.out.println(Arrays.toString(order));
-				count ++;
-			}
-			
+			System.out.println("|" + i);
 		}
-		System.out.println("veces que se repite el while: " + counter);
-		
+		System.out.println("   0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9");
+		return matriz;
 	}
 
 	private static int randomInt() {
