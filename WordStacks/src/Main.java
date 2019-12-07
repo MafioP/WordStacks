@@ -34,19 +34,16 @@ public class Main {
 			length = Character.getNumericValue(values[3]);
 			
 			String wordGuess = getWord(x, y, length, letras, orientacion);
-			System.out.println(wordGuess);
-			
-			//comparar si wordGuess esta en la lista de palabras
-			for (int i=0; i<listaPalabras.length; i++) {
-				System.out.println(listaPalabras[i]);
+			for(int i=0; i<listaPalabras.length; i++) {
 				if (listaPalabras[i].equals(wordGuess)) {
-					listaPalabras[i] = null;
-					System.out.println(wordGuess + " esta en la lista de palabras");
-				}else if ( listaPrueba[i] == wordGuess) {
-					listaPrueba[i] = null;
+					letras = wordRemove(letras, x, y, length, orientacion); //eliminar la palabra de la tabla
+					break;
+				}else {
+					System.out.println(wordGuess + " no esta en la lista de palabras");
 				}
 			}
-			letras = wordRemove(letras, x, y, length, orientacion); //eliminar la palabra de la tabla
+			System.out.println(wordGuess);
+			
 		}
 	}
 
