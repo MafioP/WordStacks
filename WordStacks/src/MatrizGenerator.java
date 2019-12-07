@@ -8,8 +8,9 @@ public class MatrizGenerator {
 		return matriz;
 	}
 	
-	private char [][] wordToChar(String [] wordList){
+	private static char [][] wordToChar(String [] wordList){
 		char [][] word = new char [10][10];
+		//TODO Hacer metodo 
 		
 		return word;
 	}
