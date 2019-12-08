@@ -17,42 +17,72 @@ public class MatrizGenerator {
 		for (int i=0; i<order.length; i++) {	
 			charWord = wordToChar(wordList, order[i]);
 			addWord(coords[i], matriz, charWord);
+			for (int j = 0; j < SIZE; j++) {
+				if(matriz[y-1][j] == '\0'){
+					gravity(matriz, coords[i], y-1);
+				}
+			}
 		}
 		return matriz;
 	}
 	
+	private static void gravity(char[][] matriz, int coords, int y) {
+		int height = 0;
+		System.out.println(" y " + y);
+		while(matriz[y-height][coords] == '\0') {
+			height ++;
+			System.out.println("height: " + height);
+		}
+		for (int i = 0; i < y - height; i++) {
+			matriz[y-i][coords] = matriz[height-i][coords];
+		}
+		
+	}
+
 	private static void addWord(int coords, char [][] matriz, char[] word) {
 		System.out.println(Arrays.toString(word));
 		int orientation = randOrientation();
 		System.out.println(orientation);
 		int index = 0;
 		
+		
 		switch (orientation) {
 		 case 1://N
 			 for (int i = word.length; i > 0; i--) {
 				 matriz[i][coords] = word[index++];
-				 System.out.println("indexN: " + index);
+				 //System.out.println("indexN: " + index);
 			 }
 			 break;
 		 case 2://S
 			 for (int i = 0; i < word.length; i++) {
 				 matriz[i][coords] = word[index++];
-				 System.out.println("indexS: " + index);
+				 //System.out.println("indexS: " + index);
 			 }
 			 break;
 		 case 3://E
 			 for (int i = coords; i < word.length; i++) {
 				 matriz[0][i] = word[index++];
-				 System.out.println("indexE: " + index);
+				 //System.out.println("indexE: " + index);
 			 }
 			 break;
 		 case 4://O
-			 for (int i = coords; i > coords - word.length; i--) {
-				 matriz[0][i] = word[index++];
-				 System.out.println("indexO: " + index);
+			 if (coords - word.length < 0) {
+				 int newCoords = randomInt();
+				 while(newCoords - word.length < 0) {
+					 newCoords = randomInt();
+				 }
+				 for (int i = newCoords; i > newCoords - word.length; i--) {
+				 	matriz[0][i] = word[index++];
+				 	//System.out.println("indexO: " + index);
+				 }
+				 
+			 } else {
+				 for (int i = coords; i > coords - word.length; i--) {
+					 matriz[0][i] = word[index++];
+					 //System.out.println("indexO: " + index);
+				 }
 			 }
 			 break;
-			 
 		 }
 	}
 	
@@ -105,20 +135,8 @@ public class MatrizGenerator {
 		return order;
 	}
 	
-	private static boolean checkIfEmpty(int y, int length, int orientacion, char[][] matriz) {
+	private static boolean checkIfEmpty(int x, int y, int length, char[][] matriz) {
 		boolean empty = false;
-		char checkEmpty = '0';
-		switch(orientacion) {
-		case 2:
-			for(int i = y; y <= length; i++) {
-				checkEmpty = matriz[0][i];
-				if(checkEmpty != '0' ) {
-					empty = true;
-				}
-			}
-			break;
-		}
-		
 		return empty;
 		
 	}
