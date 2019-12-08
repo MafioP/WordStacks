@@ -11,9 +11,7 @@ public class Testing {
 	private static boolean debug = !true;
 
 	public static void main(String[] args) {
-		String [] listaPalabras = {"AAA", "AAAAAA", "BBBBBBBBB", "CCCCC",
-				"DDDDD", "EEEEE", "FFFFF", "GGGGG",
-				"HHHHH", "IIIII", "JJJJJ"};
+		String [] listaPalabras = {"ORDENADOR", "MONITOR", "TECLADO", "RATON", "ALTAVOZ", "DISCO", "GRAFICA", "PROGRAMA", "CODIGO", "ALGORITMO"};
 		generateMatriz(listaPalabras);
 	}
 	private static char[][] generateMatriz(String[] tipoLista) {

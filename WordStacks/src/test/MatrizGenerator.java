@@ -31,10 +31,20 @@ public class MatrizGenerator {
 		System.out.println(" y " + y);
 		while(matriz[y-height][coords] == '\0') {
 			height ++;
-			System.out.println("height: " + height);
 		}
-		for (int i = 0; i < y - height; i++) {
-			matriz[y-i][coords] = matriz[height-i][coords];
+		System.out.println("height: " + height);
+		if(height == 9) {
+			for (int i = 0; i <= y - height; i++) {
+				System.out.println("i: " + i);
+				matriz[y-i][coords] = matriz[y - height + 1][coords];
+				matriz[y-i][coords] = '\0';
+			}
+		} else {
+			for (int i = 0; i <= y - height; i++) {
+				System.out.println("i: " + i);
+				matriz[y-i][coords] = matriz[y - height + 1 - i][coords];
+				
+			}
 		}
 		
 	}
