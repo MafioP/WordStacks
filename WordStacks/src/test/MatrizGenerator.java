@@ -17,17 +17,13 @@ public class MatrizGenerator {
 		for (int i=0; i<order.length; i++) {	
 			charWord = wordToChar(wordList, order[i]);
 			addWord(coords[i], matriz, charWord);
-			for (int j = 0; j < SIZE; j++) {
-				if(matriz[y-1][j] == '\0'){
-					gravity(matriz, coords[i], y-1);
-				}
-			}
+			gravity(matriz, coords[i], y-1);
 		}
 		return matriz;
 	}
 	
 	private static void gravity(char[][] matriz, int coords, int y) {
-		int height = 0;
+		/*int height = 0;
 		System.out.println(" y " + y);
 		while(matriz[y-height][coords] == '\0') {
 			height ++;
@@ -45,6 +41,14 @@ public class MatrizGenerator {
 				matriz[y-i][coords] = matriz[y - height + 1 - i][coords];
 				
 			}
+		}*/
+		for (int i = 0; i < y; i++) {
+			for (int j = 0; j < SIZE; j++) {
+				if(matriz[i+1][j] == '\0') {
+					matriz[i+1][j] = matriz[i][j];
+					matriz[i][j] = '\0';
+				}
+			}
 		}
 		
 	}
@@ -60,18 +64,20 @@ public class MatrizGenerator {
 		 case 1://N
 			 for (int i = word.length; i > 0; i--) {
 				 matriz[i][coords] = word[index++];
-				 //System.out.println("indexN: " + index);
+				 System.out.println("i: " + i + "j: "+ coords);
 			 }
 			 break;
 		 case 2://S
 			 for (int i = 0; i < word.length; i++) {
 				 matriz[i][coords] = word[index++];
+				 System.out.println("i: " + i + "j: "+ coords);
 				 //System.out.println("indexS: " + index);
 			 }
 			 break;
 		 case 3://E
 			 for (int i = coords; i < word.length; i++) {
 				 matriz[0][i] = word[index++];
+				 System.out.println("i: " + i + "j: "+ coords);
 				 //System.out.println("indexE: " + index);
 			 }
 			 break;
@@ -83,12 +89,14 @@ public class MatrizGenerator {
 				 }
 				 for (int i = newCoords; i > newCoords - word.length; i--) {
 				 	matriz[0][i] = word[index++];
+				 	System.out.println("i: " + i + "j: "+ newCoords);
 				 	//System.out.println("indexO: " + index);
 				 }
 				 
 			 } else {
 				 for (int i = coords; i > coords - word.length; i--) {
 					 matriz[0][i] = word[index++];
+					 System.out.println("i: " + i + "j: "+ coords);
 					 //System.out.println("indexO: " + index);
 				 }
 			 }
