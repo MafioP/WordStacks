@@ -5,7 +5,6 @@ import java.util.Random;
 
 public class MatrizGenerator {
 	
-	public static final int SIZE = 10;
 	private static boolean debug = !true;
 	
 	public static char [][] generateMatriz(int x, int y, String [] wordList){
@@ -23,27 +22,8 @@ public class MatrizGenerator {
 	}
 	
 	private static void gravity(char[][] matriz, int coords, int y) {
-		/*int height = 0;
-		System.out.println(" y " + y);
-		while(matriz[y-height][coords] == '\0') {
-			height ++;
-		}
-		System.out.println("height: " + height);
-		if(height == 9) {
-			for (int i = 0; i <= y - height; i++) {
-				System.out.println("i: " + i);
-				matriz[y-i][coords] = matriz[y - height + 1][coords];
-				matriz[y-i][coords] = '\0';
-			}
-		} else {
-			for (int i = 0; i <= y - height; i++) {
-				System.out.println("i: " + i);
-				matriz[y-i][coords] = matriz[y - height + 1 - i][coords];
-				
-			}
-		}*/
 		for (int i = 0; i < y; i++) {
-			for (int j = 0; j < SIZE; j++) {
+			for (int j = 0; j < 10; j++) {
 				if(matriz[i+1][j] == '\0') {
 					matriz[i+1][j] = matriz[i][j];
 					matriz[i][j] = '\0';
@@ -132,7 +112,7 @@ public class MatrizGenerator {
 		check = randomInt();
 		order[count++] = check;
 		
-		while (count < SIZE) {
+		while (count < 10) {
 			check = randomInt();
 			boolean exist = false;
 			for (int i = 0; i < count; i++) {
@@ -161,7 +141,7 @@ public class MatrizGenerator {
 	
 	
 	private static int randomInt() {
-		int value = new Random().nextInt(SIZE);
+		int value = new Random().nextInt(10);
 		if (debug) System.out.println("Next int: " + value);
 		return value;
 	}
