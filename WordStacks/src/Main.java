@@ -13,9 +13,7 @@ public class Main{
 		String [] listaPrueba = {"AAA", "AAAAAA", "BBBBBBBBB", "COCK",
 				"DDDDD", "EEEEE", "FFFFF", "GGGGG",
 				"HHHHH", "IIIII", "JJJJJ"};
-		String [] listaPalabras = {"AAA", "AAAAAA", "BBBBBBBBB", "CCCCC",
-				"DDDDD", "EEEEE", "FFFFF", "GGGGG",
-				"HHHHH", "IIIII", "JJJJJ"};
+		String [] listaPalabras = {"ORDENADOR", "MONITOR", "TECLADO", "RATON", "ALTAVOZ", "DISCO", "GRAFICA", "PROGRAMA", "CODIGO", "ALGORITMO"};
 		
 		letras = init(modo, listaPrueba, listaPalabras);
 		
