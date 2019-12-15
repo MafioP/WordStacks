@@ -71,7 +71,12 @@ public class MatrizGenerator {
 		}
 		
 	}
-
+	/**
+	 * 
+	 * @param matriz 
+	 * @param colIndex numero aleatorio que idica la columna
+	 * @param word palabra formada por chars
+	 */
 	private static void addWord(char [][] matriz, int colIndex, char[] word) {
 		Orientation orientation = Orientation.random();
 		log("Orientation = " + orientation.getName());
@@ -81,6 +86,9 @@ public class MatrizGenerator {
 		switch (orientation) {
 		 case N: 
 			 int minRowIndex = getMinRowIndex(matriz, colIndex);
+			 while (colIndex - wordLength < minRowIndex) {
+				 colIndex = randomInt(numColumns);
+			 }
 			 for (int i = wordLength - 1; i >= minRowIndex; i--) {
 				 matriz[i][colIndex] = word[wordLength - i - 1];
 				 log("i: " + i + " j: "+ colIndex);
@@ -88,6 +96,9 @@ public class MatrizGenerator {
 			 break;
 		 case S: 
 			 int maxRowIndex = getMaxRowIndex(matriz, colIndex, numColumns);
+			 while (colIndex + wordLength > maxRowIndex) {
+				 colIndex = randomInt(numColumns);
+			 }
 			 for (int i = 0; i < wordLength; i++) {
 				 matriz[i][colIndex] = word[i];
 				 log("i: " + i + "j: "+ colIndex);
@@ -116,16 +127,9 @@ public class MatrizGenerator {
 		 }
 	}
 	
-	
 
-	private static int getMaxRowIndex(char[][] matriz, int colIndex, int numColumns) {
-		for (int i = colIndex; i < numColumns; i++) {
-			if (matriz[i][0] != '\0') {
-				return i;
-			}
-		}
-		return numColumns;
-	}
+
+	
 	private static int getMinRowIndex(char[][] matriz, int colIndex) {
 		for (int i = colIndex; i > 0; i--) {
 			if(matriz[i][0] != '\0') {
@@ -134,16 +138,16 @@ public class MatrizGenerator {
 		}
 		return 0;
 	}
-
-	private static int getMinColumnIndex(char[][] matriz, int colIndex) {
-		for (int i = colIndex; i > 0; i--) {
-			if(matriz[0][i] != '\0') {
+	
+	private static int getMaxRowIndex(char[][] matriz, int colIndex, int numColumns) {
+		for (int i = colIndex; i < numColumns; i++) {
+			if (matriz[i][0] != '\0') {
 				return i;
 			}
 		}
-		return 0;
+		return numColumns;
 	}
-
+	
 	private static int getMaxColumnIndex(char [][] matriz, int index, int numColumns) {
 		for (int i = index; i < numColumns; i++) {
 			if (matriz[0][i] != '\0') {
@@ -152,6 +156,16 @@ public class MatrizGenerator {
 		}
 		return numColumns;
 	}
+	
+	private static int getMinColumnIndex(char[][] matriz, int colIndex) {
+		for (int i = colIndex; i > 0; i--) {
+			if(matriz[0][i] != '\0') {
+				return i;
+			}
+		}
+		return 0;
+	}
+	
 	
 	private static char [] wordToChar(String word) {
 		char[] charArray = word.toCharArray();
@@ -179,7 +193,6 @@ public class MatrizGenerator {
 			counter ++;
 			
 			if (!exist) {
-				//System.out.println("desigual");
 				order[count] = check;
 				if (debug) System.out.println(Arrays.toString(order));
 				count ++;
@@ -197,7 +210,7 @@ public class MatrizGenerator {
 	
 	private static int randomInt(int size) {
 		int value = new Random().nextInt(size);
-		if (debug) System.out.println("Next int: " + value);
+		//log("Next int: " + value);
 		return value;
 	}
 	
