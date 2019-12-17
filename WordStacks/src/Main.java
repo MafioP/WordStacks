@@ -10,7 +10,6 @@ public class Main {
 		char [][] letras = new char [10][10];
 		char [] values = new char[4];
 		
-		Scanner in = new Scanner(System.in);
 		Diccionario diccionario = new Diccionario();
 		String [] listaPrueba = {"AAA", "AAAAAA", "BBBBBBBBB", "CCCC","DDDDD", "EEEEE", "FFFFF", "GGGGG","HHHHH", "IIIII", "JJJJJ"};
 		String [] listaPalabras = diccionario.listaNormal();
@@ -22,7 +21,10 @@ public class Main {
 			System.out.println("introduzca las coordenadas de la palabra de la forma x, y, orientacion, longitud. Por ejemplo 42N7");
 			
 			//lee las coordenadas de la palabra
-			String coords = in.next();
+			String coords = MainScanner.readInput();
+			while (coords == "0") {
+				coords = MainScanner.readInput();
+			}
 			values = readValue(coords);
 			System.out.println("coordenadas" + coords);
 			
