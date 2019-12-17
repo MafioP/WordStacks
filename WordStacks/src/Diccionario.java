@@ -9,7 +9,7 @@ public class Diccionario {
 		String [] listaprueba = {"AAA", "AAAAAA", "BBBBBBBBB", "CCCC","DDDDD", "EEEEE", "FFFFF", "GGGGG","HHHHH", "IIIII", "JJJJJ"};
 		return listaprueba;
 	}
-	public static String[] listaNormal() { // 10 palabras aleatorias de diccionario
+	public String[] listaNormal() { // 10 palabras aleatorias de diccionario
 
 		String[] listaNormal = diccionario();
 		String[] listaRand = new String[10];
