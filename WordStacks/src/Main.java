@@ -21,9 +21,16 @@ public class Main {
 			System.out.println("introduzca las coordenadas de la palabra de la forma x, y, orientacion, longitud. Por ejemplo 42N7");
 			
 			//lee las coordenadas de la palabra
-			String coords = MainScanner.readInput();
-			while (coords == "0") {
-				coords = MainScanner.readInput();
+			String input = MainScanner.readInput();
+			String coords = "";
+			String clues = "";
+			while (input == "0") {
+				input = MainScanner.readInput();
+			}
+			if (input.length() == 4) {
+				coords = input;
+			} else if (input.length() == 3) {
+				clues = input;
 			}
 			values = readValue(coords);
 			System.out.println("coordenadas" + coords);

@@ -10,15 +10,22 @@ public class MainScanner {
 	 */
 	public static String readInput() {
 		String invalidInput = "0";
-		String readCoords;
+		String readInput;
 		Scanner in = new Scanner(System.in);
-		readCoords = in.next();
+		readInput = in.next();
 		
-		if (readCoords.length() <=4 && readCoords.length() != 2) {
-			switch (readCoords.length()) {
+		if (readInput.length() <=4 && readInput.length() != 2) {
+			switch (readInput.length()) {
 				case 4:
-					if (validate(readCoords)) {
-						return readCoords;
+					if (validate(readInput)) {
+						return readInput;
+					} else {
+						System.out.println("Entrada no valida");
+					}
+					break;
+				case 3:
+					if (validateClues(readInput)) {
+						return readInput;
 					} else {
 						System.out.println("Entrada no valida");
 					}
@@ -49,4 +56,14 @@ public class MainScanner {
 		
 		return matcher.matches();
 	}
+	private static boolean validateClues(String input) {
+		if (input == null) {
+			return false;
+		}
+		Pattern pattern = Pattern.compile("(LET)|(POS)|(PAL)");
+		Matcher matcher = pattern.matcher(input);	
+		
+		return matcher.matches();
+	}
+	
 }
