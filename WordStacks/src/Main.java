@@ -1,11 +1,16 @@
+import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.Scanner;
+
 
 public class Main {
 	
 	public static void main(String[] args) {
 		char modo = 0;
 		int x, y, length;
+		int score = 0, maxScore;
 		char orientacion;
 		char [][] letras = new char [10][10];
 		char [] values = new char[4];
@@ -45,6 +50,8 @@ public class Main {
 			String wordGuess = getWord(x, y, length, letras, orientacion);
 			for(int i=0; i<listaPalabras.length; i++) {
 				if (listaPalabras[i].equals(wordGuess)) {
+					score ++;
+					System.out.println("Score: " + score);
 					letras = wordRemove(letras, x, y, length, orientacion); //eliminar la palabra de la tabla
 					break;
 				}else {
@@ -52,8 +59,18 @@ public class Main {
 				}
 			}
 			System.out.println(wordGuess);
-			
 		}
+		try {
+			PrintWriter pWriter = new PrintWriter(new FileWriter("data.txt", true));
+			pWriter.println("Puntuacion: " + score);
+			pWriter.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		System.out.println(MainScanner.readFile());
+		
 	}
 
 

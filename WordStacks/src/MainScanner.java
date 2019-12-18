@@ -1,8 +1,26 @@
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class MainScanner {
+	
+	public static String readFile() {
+		String filepath = "data.txt";
+		String data = "";
+		try {
+			Scanner fReader = new Scanner(new File(filepath));
+			data = fReader.nextLine();
+			
+			fReader.close();
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return data;
+	}
+	
 	
 	/**
 	 * lee la entrada y comprueba si es valida para ser usada en el resto del programa
