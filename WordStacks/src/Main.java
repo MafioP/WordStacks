@@ -10,19 +10,21 @@ public class Main {
 	public static void main(String[] args) {
 		char modo = 0;
 		int x, y, length;
-		int score = 0, maxScore;
+		int score = 10, maxScore;
 		char orientacion;
 		char [][] letras = new char [10][10];
 		char [] values = new char[4];
 		
+		String [] wordList; 
 		Diccionario diccionario = new Diccionario();
 		String [] listaPrueba = {"AAA", "AAAAAA", "BBBBBBBBB", "CCCC","DDDDD", "EEEEE", "FFFFF", "GGGGG","HHHHH", "IIIII", "JJJJJ"};
 		String [] listaPalabras = diccionario.listaNormal();
 
+		System.out.println("Introduzca P o p para seleccionar modo prueba, introduzca otra letra para el modo normal");
+		wordList = setMode(modo, listaPrueba, listaPalabras);
+		letras = generateMatriz(wordList);
 		
-		letras = init(modo, listaPrueba, listaPalabras);
-		
-		while (listaPalabras.length>0 || listaPrueba.length>0) {
+		while (wordList.length > 5) {
 			System.out.println("introduzca las coordenadas de la palabra de la forma x, y, orientacion, longitud. Por ejemplo 42N7");
 			
 			//lee las coordenadas de la palabra
@@ -48,8 +50,9 @@ public class Main {
 			length = Character.getNumericValue(values[3]);
 			
 			String wordGuess = getWord(x, y, length, letras, orientacion);
-			for(int i=0; i<listaPalabras.length; i++) {
-				if (listaPalabras[i].equals(wordGuess)) {
+			for(int i=0; i<wordList.length; i++) {
+				if (wordList[i].equals(wordGuess)) {
+					//TODO elimar palabra de wordList
 					score ++;
 					System.out.println("Score: " + score);
 					letras = wordRemove(letras, x, y, length, orientacion); //eliminar la palabra de la tabla
@@ -71,6 +74,22 @@ public class Main {
 		
 		System.out.println(MainScanner.readFile());
 		
+	}
+
+
+	private static String[] setMode(char modo, String[] listaPrueba, String[] listaPalabras) {
+		String[] wordList;
+		try {
+			modo = (char) System.in.read();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		if (modo == 'p' || modo == 'P') {
+			wordList = listaPrueba;
+		} else {
+			wordList = listaPalabras;
+		}
+		return wordList;
 	}
 
 
@@ -172,24 +191,6 @@ public class Main {
 		}
 		return values;
 		
-	}
-
-	private static char [][] init(char modo, String[] listaPrueba, String[] listaPalabras) {
-		char [][] letras = new char [10][10];
-		System.out.println("Introduzca P o p para seleccionar modo prueba, introduzca otra letra para el modo normal");
-		try {
-			modo = (char) System.in.read();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		if(modo == 'p' || modo == 'P') {
-			letras = generateMatriz(listaPrueba);
-		}else {
-			letras = generateMatriz(listaPalabras);
-		}
-		return letras;
 	}
 
 	private static char[][] generateMatriz(String[] tipoLista) {
