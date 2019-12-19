@@ -26,10 +26,9 @@ public class MainScanner {
 	 * lee la entrada y comprueba si es valida para ser usada en el resto del programa
 	 * @return
 	 */
-	public static String readInput() {
+	public static String readInput(Scanner in) {
 		String invalidInput = "0";
 		String readInput;
-		Scanner in = new Scanner(System.in);
 		readInput = in.next();
 		
 		if (readInput.length() <=4 && readInput.length() != 2) {
@@ -74,6 +73,7 @@ public class MainScanner {
 		
 		return matcher.matches();
 	}
+	
 	private static boolean validateClues(String input) {
 		if (input == null) {
 			return false;
