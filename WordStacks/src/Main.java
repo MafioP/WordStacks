@@ -1,8 +1,6 @@
-import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.Scanner;
 
 
 public class Main {
@@ -22,9 +20,10 @@ public class Main {
 
 		System.out.println("Introduzca P o p para seleccionar modo prueba, introduzca otra letra para el modo normal");
 		wordList = setMode(modo, listaPrueba, listaPalabras);
+		int wordNum = wordList.length;
 		letras = generateMatriz(wordList);
 		
-		while (wordList.length > 5) {
+		while (wordNum > 0) {
 			System.out.println("introduzca las coordenadas de la palabra de la forma x, y, orientacion, longitud. Por ejemplo 42N7");
 			
 			//lee las coordenadas de la palabra
@@ -42,17 +41,16 @@ public class Main {
 			values = readValue(coords);
 			System.out.println("coordenadas" + coords);
 			
-			
 			//leer los caracteres y convertirlos a int si es necesario
 			x = Character.getNumericValue(values[0]);
 			y = Character.getNumericValue(values[1]);
 			orientacion = values[2];
 			length = Character.getNumericValue(values[3]);
-			
 			String wordGuess = getWord(x, y, length, letras, orientacion);
+			
 			for(int i=0; i<wordList.length; i++) {
 				if (wordList[i].equals(wordGuess)) {
-					//TODO elimar palabra de wordList
+					wordNum --;
 					score ++;
 					System.out.println("Score: " + score);
 					letras = wordRemove(letras, x, y, length, orientacion); //eliminar la palabra de la tabla
@@ -71,25 +69,7 @@ public class Main {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
 		System.out.println(MainScanner.readFile());
-		
-	}
-
-
-	private static String[] setMode(char modo, String[] listaPrueba, String[] listaPalabras) {
-		String[] wordList;
-		try {
-			modo = (char) System.in.read();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		if (modo == 'p' || modo == 'P') {
-			wordList = listaPrueba;
-		} else {
-			wordList = listaPalabras;
-		}
-		return wordList;
 	}
 
 
@@ -183,7 +163,6 @@ public class Main {
 		
 	}
 
-
 	private static char [] readValue(String coords) {
 		char [] values = new char [4];
 		for(int i=0; i<coords.length(); i++) {
@@ -193,6 +172,21 @@ public class Main {
 		
 	}
 
+	private static String[] setMode(char modo, String[] listaPrueba, String[] listaPalabras) {
+		String[] wordList;
+		try {
+			modo = (char) System.in.read();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		if (modo == 'p' || modo == 'P') {
+			wordList = listaPrueba;
+		} else {
+			wordList = listaPalabras;
+		}
+		return wordList;
+	}
+	
 	private static char[][] generateMatriz(String[] tipoLista) {
 		char [][] matriz = NuevaMatriz.nuevaMatriz (10, 10, tipoLista);
 		System.out.println("   0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9");
@@ -206,5 +200,4 @@ public class Main {
 		System.out.println("   0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9");
 		return matriz;
 	}
-	
 }
