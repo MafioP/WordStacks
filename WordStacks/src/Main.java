@@ -146,11 +146,11 @@ public class Main {
 			}
 			break;
 		}
-		gravity(letras);
+		newGenerate(letras);
 		return letras;
 	}
 	
-	private static void gravity(char[][] letras) {
+	private static void newGenerate(char[][] letras) {
 		System.out.println("   0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9");
 		for (int i = 0; i<10; i++) {
 			System.out.print(i + "|" + " ");
