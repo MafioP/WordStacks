@@ -18,52 +18,53 @@ public class Main {
 		Scanner in = new Scanner(System.in);
 		
 		String [] wordList; 
-		Diccionario diccionario = new Diccionario();
 		String [] listaPrueba = Diccionario.listaPrueba();
-		String [] listaPalabras = diccionario.listaNormal();
+		String [] listaPalabras = Diccionario.listaNormal();
 
 		System.out.println("Introduzca P o p para seleccionar modo prueba, introduzca otra letra para el modo normal");
 		wordList = setMode(listaPrueba, listaPalabras);
-		letras = generateMatriz(wordList);
+		while(wordList.length > 0) {
 		
-		while (wordList.length > 0) {
-			System.out.println("introduzca las coordenadas de la palabra de la forma x, y, orientacion, longitud. Por ejemplo 42N7");
+			letras = generateMatriz(wordList);
 			
-			//lee las coordenadas de la palabra
-			String input = MainScanner.readInput(in);
-			String coords = "";
-			String clues = "";
-			while (input == "0") {
-				input = MainScanner.readInput(in);
-			}
-			if (input.length() == 4) {
-				coords = input;
-			} else if (input.length() == 3) {
-				clues = input;
-			}
-			values = readValue(coords);
-			System.out.println("coordenadas" + coords);
-			
-			//leer los caracteres y convertirlos a int
-			x = Character.getNumericValue(values[0]);
-			y = Character.getNumericValue(values[1]);
-			orientacion = values[2];
-			length = Character.getNumericValue(values[3]);
-			
-			String wordGuess = getWord(x, y, length, letras, orientacion);
-			
-			for(int i=0; i<wordList.length; i++) {
-				if (wordList[i].equals(wordGuess)) {
-					List<String> list = new ArrayList<String>(Arrays.asList(wordList));
-					list.remove(i);
-					wordList = list.toArray(new String[0]);
-					System.out.println("WordList length: " + wordList.length); 
-					score ++;
-					System.out.println("Score: " + score);
-					letras = wordRemove(letras, x, y, length, orientacion); //eliminar la palabra de la tabla
-					break;
-				}else {
-					//TODO
+			while (readableWords(wordList)) {
+				System.out.println("introduzca las coordenadas de la palabra de la forma x, y, orientacion, longitud. Por ejemplo 42N7");
+				
+				//lee las coordenadas de la palabra
+				String input = MainScanner.readInput(in);
+				String coords = "";
+				String clues = "";
+				while (input == "0") {
+					input = MainScanner.readInput(in);
+				}
+				if (input.length() == 4) {
+					coords = input;
+				} else if (input.length() == 3) {
+					clues = input;
+				}
+				values = readValue(coords);
+				System.out.println("coordenadas" + coords);
+				
+				//leer los caracteres y convertirlos a int
+				x = Character.getNumericValue(values[0]);
+				y = Character.getNumericValue(values[1]);
+				orientacion = values[2];
+				length = Character.getNumericValue(values[3]);
+				
+				String wordGuess = getWord(x, y, length, letras, orientacion);
+				
+				for(int i=0; i<wordList.length; i++) {
+					if (wordList[i].equals(wordGuess)) {
+						List<String> list = new ArrayList<String>(Arrays.asList(wordList));
+						list.remove(i);
+						wordList = list.toArray(new String[0]);
+						System.out.println("WordList length: " + wordList.length); 
+						score ++;
+						System.out.println("Score: " + score);
+						letras = wordRemove(letras, x, y, length, orientacion); //eliminar la palabra de la tabla
+						break;
+					}else {
+						//TODO
 				}
 			}
 			System.out.println(wordGuess);
@@ -78,6 +79,14 @@ public class Main {
 			e.printStackTrace();
 		}
 		System.out.println(MainScanner.readFile());
+		}
+	}
+
+	private static boolean readableWords(String[] wordList) {
+		
+		
+		// TODO Auto-generated method stub
+		return false;
 	}
 
 
