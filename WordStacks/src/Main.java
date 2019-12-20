@@ -1,6 +1,9 @@
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Scanner;
 
 
@@ -21,10 +24,9 @@ public class Main {
 
 		System.out.println("Introduzca P o p para seleccionar modo prueba, introduzca otra letra para el modo normal");
 		wordList = setMode(listaPrueba, listaPalabras);
-		int wordNum = wordList.length;
 		letras = generateMatriz(wordList);
 		
-		while (wordNum > 0) {
+		while (wordList.length > 0) {
 			System.out.println("introduzca las coordenadas de la palabra de la forma x, y, orientacion, longitud. Por ejemplo 42N7");
 			
 			//lee las coordenadas de la palabra
@@ -52,13 +54,16 @@ public class Main {
 			
 			for(int i=0; i<wordList.length; i++) {
 				if (wordList[i].equals(wordGuess)) {
-					wordNum --;
+					List<String> list = new ArrayList<String>(Arrays.asList(wordList));
+					list.remove(i);
+					wordList = list.toArray(new String[0]);
+					System.out.println("WordList length: " + wordList.length); 
 					score ++;
 					System.out.println("Score: " + score);
 					letras = wordRemove(letras, x, y, length, orientacion); //eliminar la palabra de la tabla
 					break;
 				}else {
-					System.out.println(wordGuess + " no esta en la lista de palabras");
+					//TODO
 				}
 			}
 			System.out.println(wordGuess);
