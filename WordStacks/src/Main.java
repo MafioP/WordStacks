@@ -17,17 +17,15 @@ public class Main {
 		char [] values = new char[4];
 		Scanner in = new Scanner(System.in);
 		
-		String [] wordList; 
 		String [] listaPrueba = Diccionario.listaPrueba();
 		String [] listaPalabras = Diccionario.listaNormal();
 
 		System.out.println("Introduzca P o p para seleccionar modo prueba, introduzca otra letra para el modo normal");
-		wordList = setMode(listaPrueba, listaPalabras);
+		String [] wordList = setMode(listaPrueba, listaPalabras);
 		while(wordList.length > 0) {
-		
 			letras = generateMatriz(wordList);
 			
-			while (readableWords(wordList)) {
+			while (readableWords(wordList, letras)) {
 				System.out.println("introduzca las coordenadas de la palabra de la forma x, y, orientacion, longitud. Por ejemplo 42N7");
 				
 				//lee las coordenadas de la palabra
@@ -82,7 +80,7 @@ public class Main {
 		}
 	}
 
-	private static boolean readableWords(String[] wordList) {
+	private static boolean readableWords(String [] wordList, char [][] letras) {
 		
 		
 		// TODO Auto-generated method stub
