@@ -68,9 +68,24 @@ public class MainScanner {
 		if (input == null) {
 			return false;
 		}
-		Pattern pattern = Pattern.compile("\\d\\d([NSEO]|[nseo])\\d");
+		Pattern pattern = Pattern.compile("\\d\\d[NSEO]\\d");
 		Matcher matcher = pattern.matcher(input);
-		
+		if(matcher.matches()) {
+			int x = Character.getNumericValue(input.charAt(0));
+			int y = Character.getNumericValue(input.charAt(1));
+			int l = Character.getNumericValue(input.charAt(3));
+			char o = input.charAt(2);
+			switch (o) {
+			case 'N':
+				if (x - l < 0) {
+					return false;
+				}
+			case 'O':
+				if (y - l < 0) {
+					return false;
+				}
+			}
+		}
 		return matcher.matches();
 	}
 	

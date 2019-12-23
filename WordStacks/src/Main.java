@@ -121,9 +121,10 @@ public class Main {
 	}
 
 
-	private static boolean checkword(String columnWord, String[] wordList) {
+	private static boolean checkword(String word, String[] wordList) {
 		for(int i = 0; i < wordList.length; i++) {
-			if(columnWord.contains(wordList[i])) {
+			if(word.contains(wordList[i])) {
+				System.out.println("Palabra encontrada " + wordList[i]);
 				return true;
 			}
 		}
