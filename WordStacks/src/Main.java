@@ -17,17 +17,15 @@ public class Main {
 		char [] values = new char[4];
 		Scanner in = new Scanner(System.in);
 		
-		String [] wordList; 
 		String [] listaPrueba = Diccionario.listaPrueba();
 		String [] listaPalabras = Diccionario.listaNormal();
 
 		System.out.println("Introduzca P o p para seleccionar modo prueba, introduzca otra letra para el modo normal");
-		wordList = setMode(listaPrueba, listaPalabras);
+		String [] wordList = setMode(listaPrueba, listaPalabras);
 		while(wordList.length > 0) {
-		
 			letras = generateMatriz(wordList);
 			
-			while (readableWords(wordList)) {
+			while (readableWords(wordList, letras)) {
 				System.out.println("introduzca las coordenadas de la palabra de la forma x, y, orientacion, longitud. Por ejemplo 42N7");
 				
 				//lee las coordenadas de la palabra
@@ -69,6 +67,7 @@ public class Main {
 			}
 			System.out.println(wordGuess);
 		}
+			System.out.println("Se acabaron las palabras legibles loko");
 		
 		try {
 			PrintWriter pWriter = new PrintWriter(new FileWriter("data.txt", true));
@@ -82,13 +81,55 @@ public class Main {
 		}
 	}
 
-	private static boolean readableWords(String[] wordList) {
-		
-		
-		// TODO Auto-generated method stub
+	private static boolean readableWords(String [] wordList, char [][] letras) {
+		for (int j = 0; j < letras[0].length; j++) {
+			String columnWord = "";
+			//Busqueda en direccion sur
+			for (int i = 0; i < letras.length; i++) {
+				columnWord += letras[i][j];
+			}
+			if(checkword(columnWord, wordList)) {
+				return true;
+			}
+			columnWord = "";
+			//Busqueda en direccion norte
+			for (int i = letras.length - 1; i > 0; i--) {
+				columnWord += letras[i][j];
+			}
+			if(checkword(columnWord, wordList)) {
+				return true;
+			}
+		}
+		for (int j = 0; j < letras.length; j++) {
+			String rowWord = "";
+			//Busqueda en direccion este
+			for (int i = 0; i < letras[0].length; i++) {
+				rowWord += letras[j][i];
+			}
+			if(checkword(rowWord, wordList)) {
+				return true;
+			}
+			//Busqueda en direccion oeste
+			for (int i = letras[0].length - 1; i > 0; i--) {
+				rowWord += letras[j][i];
+			}
+			if(checkword(rowWord, wordList)) {
+				return true;
+			}
+		}
 		return false;
 	}
 
+
+	private static boolean checkword(String word, String[] wordList) {
+		for(int i = 0; i < wordList.length; i++) {
+			if(word.contains(wordList[i])) {
+				System.out.println("Palabra encontrada " + wordList[i]);
+				return true;
+			}
+		}
+		return false;
+	}
 
 	private static String getWord(int x, int y, int length, char[][] letras, char orientacion) {
 		String word = "";
