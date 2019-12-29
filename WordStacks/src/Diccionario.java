@@ -1,4 +1,5 @@
 
+
 public class Diccionario {
 	private static String[] diccionario() {
 		String [] listapalabras = {"ORDENADOR", "MONITOR", "TECLADO", "RATON", "ALTAVOZ", "DISCO", "GRAFICA", "PROGRAMA", "CODIGO", "ALGORITMO", "METODO", "FUNCION", "INTERFAZ", "VARIABLE", "CLASE", "MATRIZ",
