@@ -29,9 +29,7 @@ public class Diccionario {
 		
 	}
 	private static int[]acumularRand(int x){
-		
 		int[] acumular= new int[10];
-		
 		int num=randInt(x);
 		int cont=0;
 		acumular[cont]=num;
@@ -39,13 +37,11 @@ public class Diccionario {
 		
 		while(cont<10) {
 			num=randInt(x);
-			
 			boolean exist=false;
 			
 			for(int i=0;i<cont;i++) {
 				
 				if(acumular[i]==num) {
-					
 					exist=true;
 					break;
 				}

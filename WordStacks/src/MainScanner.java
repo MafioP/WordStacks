@@ -38,14 +38,14 @@ public class MainScanner {
 					if (validateCoords(readInput)) {
 						return readInput;
 					} else {
-						System.out.println("Entrada no valida 4");
+						System.out.println("Coordenadas no validas");
 					}
 					break;
 				case 3:
 					if (validateClues(readInput)) {
 						return readInput;
 					} else {
-						System.out.println("Entrada no valida 3");
+						System.out.println("Pista no valida");
 					}
 					break;
 				default:
@@ -53,7 +53,7 @@ public class MainScanner {
 				}
 			
 		} else {
-			System.out.println("Entrada no valida general");
+			System.out.println("Entrada no valida");
 		}
 		
 
@@ -79,7 +79,6 @@ public class MainScanner {
 			switch (o) {
 				case 'N':
 					if (y - l < -1) {
-						System.out.println(y-l);
 						return false;
 					}
 					break;

@@ -47,7 +47,6 @@ public class Main {
 				}
 				
 				values = readValue(coords);
-				System.out.println("coordenadas" + coords);
 				
 				//leer los caracteres y convertirlos a int
 				x = Character.getNumericValue(values[0]);
@@ -59,19 +58,18 @@ public class Main {
 				
 				for(int i=0; i<wordList.length; i++) {
 					if (wordList[i].equals(wordGuess)) {
+						System.out.println(wordGuess + " está en la tabla");
 						List<String> list = new ArrayList<String>(Arrays.asList(wordList));
 						list.remove(i);
 						wordList = list.toArray(new String[0]);
-						System.out.println("WordList length: " + wordList.length); 
 						score ++;
-						System.out.println("Score: " + score);
+						System.out.println("Puntuacion: " + score);			
 						letras = wordRemove(letras, x, y, length, orientacion); //eliminar la palabra de la tabla
 						break;
 					}else {
 						//TODO
 				}
 			}
-			System.out.println(wordGuess);
 			for (int i = 0; i < readableWordList.length; i++) {
 				readableWordList[i] = null;
 			}
@@ -160,6 +158,9 @@ public class Main {
 				y = j;
 				x = getPosCoords(word, rowWord);
 				//System.out.println("Word X: " + x + " Y: " + y);
+				if (count >= 10) {
+					count--;
+				}
 				readableWordList[count++] = new Word(word, x, y);
 
 				exist = true;
