@@ -101,7 +101,7 @@ public class Main {
 		int rand = (int)Math.floor(Math.random()*wordNum);
 		switch(clues) {
 		case "LET":
-			System.out.println("Has pedido una letra");
+			System.out.println("La palabra empieza por la letra " + readableWordList[rand].getWord().charAt(0));
 			break;
 		case "POS":
 			System.out.println("La palabra empieza en X: " + readableWordList[rand].getX() + " Y: " + readableWordList[rand].getY());
@@ -130,24 +130,22 @@ public class Main {
 			
 			if ((word = checkword(columnWord, wordList)) != null) {
 				x = j;
-				y = getYCoords(word, columnWord);
+				y = getPosCoords(word, columnWord);
 				//System.out.println("Word X: " + x + " Y: " + y);
 				readableWordList[count++] = new Word(word, x, y);
-				System.out.println("Count: " + count);
 
 				exist = true;
 			}
-			
+			columnWord = "";
 			//Busqueda en direccion norte
 			for (int i = letras.length - 1; i > 0; i--) {
 				columnWord += letras[i][j];
 			}
 			if ((word = checkword(columnWord, wordList)) != null) {
 				x = j;
-				y = getYCoords(word, columnWord);
+				y = getNegCoords(word, columnWord);
 				//System.out.println("Word X: " + x + " Y: " + y);
-				readableWordList[count++] = new Word(word, x, y + 1);
-				System.out.println("Count: " + count);
+				readableWordList[count++] = new Word(word, x, y);
 
 				exist = true;
 			}
@@ -160,23 +158,25 @@ public class Main {
 			}
 			if ((word = checkword(rowWord, wordList)) != null) {
 				y = j;
-				x = getXcoords(word, rowWord);
+				x = getPosCoords(word, rowWord);
 				//System.out.println("Word X: " + x + " Y: " + y);
-				readableWordList[count++] = new Word(word, x, y + 1);
-				System.out.println("Count: " + count);
+				readableWordList[count++] = new Word(word, x, y);
 
 				exist = true;
 			}
+			rowWord = "";
 			//Busqueda en direccion oeste
 			for (int i = letras[0].length - 1; i > 0; i--) {
 				rowWord += letras[j][i];
 			}
 			if ((word = checkword(rowWord, wordList)) != null) {
 				y = j;
-				x = getXcoords(word, rowWord);
+				x = getNegCoords(word, rowWord);
 				//System.out.println("Word X: " + x + " Y: " + y);
+				if (count >= 10) {
+					count--;
+				}
 				readableWordList[count++] = new Word(word, x, y);
-				System.out.println("Count: " + count);
 
 				exist = true;
 			}
@@ -185,21 +185,23 @@ public class Main {
 	}
 
 
-	private static int getXcoords(String word, String rowWord) {
-		int x = 0;
-		while((rowWord.charAt(x) + rowWord.charAt(x + 1)) != (word.charAt(0) + word.charAt(1))) {
+	private static int getPosCoords(String word, String rowWord) {
+		int n = 0;
+		n = rowWord.indexOf(word);
+		/*while((rowWord.charAt(x) != word.charAt(0) && word.charAt(1) != rowWord.charAt(x + 1))) {
 			x++;
-		}
-		return x;
+		}*/
+		return n;
 	}
 
-	private static int getYCoords(String word, String columnWord) {
-		int y = 0;
+	private static int getNegCoords(String word, String columnWord) {
+		int n = 0;
+		n = columnWord.length() - columnWord.indexOf(word);
 		
-		while ((columnWord.charAt(y) + columnWord.charAt(y + 1)) != (word.charAt(0) + word.charAt(1))) {
+		/*while ((columnWord.charAt(y) != word.charAt(0) && word.charAt(1) != columnWord.charAt(y + 1))) {
 			y++;
-		}
-		return y;
+		}*/
+		return n;
 	}
 
 	private static String checkword(String word, String[] wordList) {

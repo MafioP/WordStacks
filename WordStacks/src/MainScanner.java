@@ -84,7 +84,7 @@ public class MainScanner {
 					}
 					break;
 				case 'O':
-					if (x - l < 0) {
+					if (x + 1 - l < 0) {
 						return false;
 					}
 					break;
