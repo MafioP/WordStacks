@@ -1,3 +1,4 @@
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
@@ -34,17 +35,17 @@ public class MainScanner {
 		if (readInput.length() <=4 && readInput.length() != 2) {
 			switch (readInput.length()) {
 				case 4:
-					if (validate(readInput)) {
+					if (validateCoords(readInput)) {
 						return readInput;
 					} else {
-						System.out.println("Entrada no valida");
+						System.out.println("Coordenadas no validas");
 					}
 					break;
 				case 3:
 					if (validateClues(readInput)) {
 						return readInput;
 					} else {
-						System.out.println("Entrada no valida");
+						System.out.println("Pista no valida");
 					}
 					break;
 				default:
@@ -64,26 +65,30 @@ public class MainScanner {
 	 * @param input
 	 * @return
 	 */
-	private static boolean validate(String input) {
+	private static boolean validateCoords(String input) {
 		if (input == null) {
 			return false;
 		}
 		Pattern pattern = Pattern.compile("\\d\\d[NSEO]\\d");
 		Matcher matcher = pattern.matcher(input);
-		if(matcher.matches()) {
+		if (matcher.matches()) {
 			int x = Character.getNumericValue(input.charAt(0));
 			int y = Character.getNumericValue(input.charAt(1));
 			int l = Character.getNumericValue(input.charAt(3));
 			char o = input.charAt(2);
 			switch (o) {
-			case 'N':
-				if (x - l < 0) {
-					return false;
-				}
-			case 'O':
-				if (y - l < 0) {
-					return false;
-				}
+				case 'N':
+					if (y - l < -1) {
+						return false;
+					}
+					break;
+				case 'O':
+					if (x + 1 - l < 0) {
+						return false;
+					}
+					break;
+				default:
+					break;
 			}
 		}
 		return matcher.matches();
