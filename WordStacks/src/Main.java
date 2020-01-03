@@ -23,6 +23,7 @@ public class Main {
 		
 		if (MainScanner.readFile() != 0) {
 			score = MainScanner.readFile();
+			System.out.println("La puntuacion anteriormente guardada es: " + score);
 		}
 		
 		String [] listaPrueba = Diccionario.listaPrueba();
@@ -37,6 +38,7 @@ public class Main {
 		
 			while (wordList.length > 0) {
 				letras = generateMatriz(wordList);
+				boolean clueGive = false;
 	
 				while (readableWords(wordList, letras, readableWordList)) {
 					System.out.println("introduzca coordenadas o solicite una pista");
@@ -50,56 +52,55 @@ public class Main {
 					}
 					if (input.length() == 4) {
 						coords = input;
+						values = readValue(coords);
+					
+						//leer los caracteres y convertirlos a int
+						x = Character.getNumericValue(values[0]);
+						y = Character.getNumericValue(values[1]);
+						orientacion = values[2];
+						length = Character.getNumericValue(values[3]);
+						
+						String wordGuess = getWord(x, y, length, letras, orientacion);
+						
+						for(int i=0; i<wordList.length; i++) {
+							if (wordList[i].equals(wordGuess)) {
+								System.out.println(wordGuess + " esta en la lista de palabras");
+								List<String> list = new ArrayList<String>(Arrays.asList(wordList));
+								list.remove(i);
+								wordList = list.toArray(new String[0]);
+								score ++;
+								System.out.println("Puntuacion: " + score);			
+								letras = wordRemove(letras, x, y, length, orientacion); //eliminar la palabra de la tabla
+								break;
+							}else if (i == wordList.length - 1){
+								System.out.println(wordGuess + " no esta en la lista de palabras");
+							}
+						}
+					for (int i = 0; i < readableWordList.length; i++) {
+						readableWordList[i] = null;
+					}
 					} else if (input.length() == 3) {
 						clues = input;
 						score = giveClue(clues, readableWordList, score);
-					}
-					
-					values = readValue(coords);
-					
-					//leer los caracteres y convertirlos a int
-					x = Character.getNumericValue(values[0]);
-					y = Character.getNumericValue(values[1]);
-					orientacion = values[2];
-					length = Character.getNumericValue(values[3]);
-					
-					String wordGuess = getWord(x, y, length, letras, orientacion);
-					
-					for(int i=0; i<wordList.length; i++) {
-						if (wordList[i].equals(wordGuess)) {
-							System.out.println(wordGuess + " esta en la lista de palabras");
-							List<String> list = new ArrayList<String>(Arrays.asList(wordList));
-							list.remove(i);
-							wordList = list.toArray(new String[0]);
-							score ++;
-							System.out.println("Puntuacion: " + score);			
-							letras = wordRemove(letras, x, y, length, orientacion); //eliminar la palabra de la tabla
-							break;
-						}else if (i == wordList.length - 1){
-							System.out.println(wordGuess + " no esta en la lista de palabras");
+						System.out.println("Puntuacion: " + score);
 					}
 				}
-				for (int i = 0; i < readableWordList.length; i++) {
-					readableWordList[i] = null;
-				}
-					
-			}
+				
 				System.out.println("Se acabaron las palabras legibles");
-			
 			try {
 				PrintWriter pWriter = new PrintWriter(new FileWriter("data.txt", false));
-				pWriter.println("Puntuacion final: " + score);
+				pWriter.println(score);
 				pWriter.close();
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			System.out.println(MainScanner.readFile());
+			
 			}
 			System.out.println("Quieres seguir jugando? (escribe si o no)");
 			if (MainScanner.readInput(in).equals("si")) {
 				System.out.println("Empezando nueva partida...");
 			} else {
+				System.out.println("Cerrando el juego");
 				break;
 			}
 		}
@@ -153,7 +154,6 @@ public class Main {
 			if ((word = checkword(columnWord, wordList)) != null) {
 				x = j;
 				y = getPosCoords(word, columnWord);
-				//System.out.println("Word X: " + x + " Y: " + y);
 				readableWordList[count++] = new Word(word, x, y);
 
 				exist = true;
@@ -166,7 +166,6 @@ public class Main {
 			if ((word = checkword(columnWord, wordList)) != null) {
 				x = j;
 				y = getNegCoords(word, columnWord);
-				//System.out.println("Word X: " + x + " Y: " + y);
 				readableWordList[count++] = new Word(word, x, y);
 
 				exist = true;
@@ -181,8 +180,6 @@ public class Main {
 			if ((word = checkword(rowWord, wordList)) != null) {
 				y = j;
 				x = getPosCoords(word, rowWord);
-				//System.out.println("Word X: " + x + " Y: " + y);
-				
 				readableWordList[count++] = new Word(word, x, y);
 
 				exist = true;
@@ -195,7 +192,6 @@ public class Main {
 			if ((word = checkword(rowWord, wordList)) != null) {
 				y = j;
 				x = getNegCoords(word, rowWord);
-				//System.out.println("Word X: " + x + " Y: " + y);
 				if (count >= 10) {
 					count--;
 				}
@@ -211,19 +207,12 @@ public class Main {
 	private static int getPosCoords(String word, String rowWord) {
 		int n = 0;
 		n = rowWord.indexOf(word);
-		/*while((rowWord.charAt(x) != word.charAt(0) && word.charAt(1) != rowWord.charAt(x + 1))) {
-			x++;
-		}*/
 		return n;
 	}
 
 	private static int getNegCoords(String word, String columnWord) {
 		int n = 0;
 		n = columnWord.length() - columnWord.indexOf(word);
-		
-		/*while ((columnWord.charAt(y) != word.charAt(0) && word.charAt(1) != columnWord.charAt(y + 1))) {
-			y++;
-		}*/
 		return n;
 	}
 
