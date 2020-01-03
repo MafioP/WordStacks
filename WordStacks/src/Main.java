@@ -32,25 +32,25 @@ public class Main {
 		System.out.println("Introduzca P o p para seleccionar modo prueba, introduzca otra letra para el modo normal");
 		String [] wordList = setMode(listaPrueba, listaPalabras);
 		
-		Word [] readableWordList = new Word[listaPalabras.length];
+		Word [] readableWordList = new Word[wordList.length];
 		
-		while (true) {
+		while (true) { 
 		
-			while (wordList.length > 0) {
-				letras = generateMatriz(wordList);
+			while (wordList.length > 0) { //Mientras queden palabras en la lista el juego continua
+				letras = generateMatriz(wordList); 
 				boolean clueGive = false;
 	
-				while (readableWords(wordList, letras, readableWordList)) {
-					System.out.println("introduzca coordenadas o solicite una pista");
+				while (readableWords(wordList, letras, readableWordList)) { //Mientras haya palabras legibles en la tabla se repite el bucle
+					System.out.println("Introduzca coordenadas o solicite una pista");
 					
 					//lee las coordenadas de la palabra
-					String input = MainScanner.readInput(in);
+					String input = MainScanner.readInput(in); //Lee la entrada del scanner que verifica si es valida
 					String coords = "";
 					String clues = "";
 					while (input == "0") {
-						input = MainScanner.readInput(in);
+						input = MainScanner.readInput(in); //Si la entrada no es valida la vuelve a pedir
 					}
-					if (input.length() == 4) {
+					if (input.length() == 4) { //Si la entrada son coordenadas se ejecuta el codigo de coordenadas y sino el de pistas
 						coords = input;
 						values = readValue(coords);
 					
@@ -62,10 +62,10 @@ public class Main {
 						
 						String wordGuess = getWord(x, y, length, letras, orientacion);
 						
-						for(int i=0; i<wordList.length; i++) {
+						for(int i=0; i<wordList.length; i++) { //Se compara la palabra encontrada a partir de las coordenadas con la lista de palabras
 							if (wordList[i].equals(wordGuess)) {
 								System.out.println(wordGuess + " esta en la lista de palabras");
-								List<String> list = new ArrayList<String>(Arrays.asList(wordList));
+								List<String> list = new ArrayList<String>(Arrays.asList(wordList)); //Eliminar la palabra encontrada de la lista
 								list.remove(i);
 								wordList = list.toArray(new String[0]);
 								score ++;
@@ -76,28 +76,28 @@ public class Main {
 								System.out.println(wordGuess + " no esta en la lista de palabras");
 							}
 						}
-					for (int i = 0; i < readableWordList.length; i++) {
-						readableWordList[i] = null;
-					}
+						for (int i = 0; i < readableWordList.length; i++) { //Vaciar todas las palabras legibles para evitar errores
+							readableWordList[i] = null;
+						}
 					} else if (input.length() == 3) {
 						clues = input;
-						score = giveClue(clues, readableWordList, score);
+						score = giveClue(clues, readableWordList, score); //Al pedir una pista se restan los puntos necesarios
 						System.out.println("Puntuacion: " + score);
 					}
 				}
 				
 				System.out.println("Se acabaron las palabras legibles");
-			try {
-				PrintWriter pWriter = new PrintWriter(new FileWriter("data.txt", false));
-				pWriter.println(score);
-				pWriter.close();
-			} catch (IOException e) {
-				e.printStackTrace();
+				try {
+					PrintWriter pWriter = new PrintWriter(new FileWriter("data.txt", false)); //Sobreescribe la puntuacion obtenida en el archivo data
+					pWriter.println(score);
+					pWriter.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
 			}
 			
-			}
-			System.out.println("Quieres seguir jugando? (escribe si o no)");
-			if (MainScanner.readInput(in).equals("si")) {
+			System.out.println("Quieres seguir jugando? (escribe si o no)"); 
+			if (MainScanner.readInput(in).equals("si")) { //Si el jugador quiere volver a empezar la partida se repite el primer while y sino se sale del bucle
 				System.out.println("Empezando nueva partida...");
 			} else {
 				System.out.println("Cerrando el juego");
