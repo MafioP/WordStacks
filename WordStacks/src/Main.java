@@ -105,7 +105,13 @@ public class Main {
 			}
 		}
 	}
-	
+	/**
+	 * Escribe en consola la pista solicitada y actualiza la puntuacion segun esta
+	 * @param clues
+	 * @param readableWordList
+	 * @param score
+	 * @return nueva puntuacion
+	 */
 	private static int giveClue(String clues, Word [] readableWordList, int score) {
 		int wordNum = 0;
 		for (int i = 0; i < readableWordList.length; i++) {
@@ -136,7 +142,13 @@ public class Main {
 		return score;
 	}
 
-
+	/**
+	 * Busca en las cuatro orientaciones posibles y compara cada linea de la busqueda con la lista de palabras
+	 * @param wordList
+	 * @param letras
+	 * @param readableWordList
+	 * @return
+	 */
 	private static boolean readableWords(String [] wordList, char [][] letras, Word [] readableWordList) {
 		String word;
 		int count = 0;
@@ -203,19 +215,34 @@ public class Main {
 		return exist;
 	}
 
-
+	/**
+	 * 
+	 * @param word
+	 * @param rowWord
+	 * @return
+	 */
 	private static int getPosCoords(String word, String rowWord) {
-		int n = 0;
-		n = rowWord.indexOf(word);
+		int n = rowWord.indexOf(word);
 		return n;
 	}
-
+	
+	/**
+	 * 
+	 * @param word
+	 * @param columnWord
+	 * @return
+	 */
 	private static int getNegCoords(String word, String columnWord) {
-		int n = 0;
-		n = columnWord.length() - columnWord.indexOf(word);
+		int n = columnWord.length() - columnWord.indexOf(word);
 		return n;
 	}
 
+	/**
+	 * Comprueba si la linea leida en "readableWords" esta en la lista de palabras
+	 * @param word
+	 * @param wordList
+	 * @return
+	 */
 	private static String checkword(String word, String[] wordList) {
 		for(int i = 0; i < wordList.length; i++) {
 			if(word.contains(wordList[i])) {
@@ -224,7 +251,15 @@ public class Main {
 		}
 		return null;
 	}
-
+	/**
+	 * A partir de las coordenadas devuelve la palabra encontrada
+	 * @param x
+	 * @param y
+	 * @param length
+	 * @param letras
+	 * @param orientacion
+	 * @return
+	 */
 	private static String getWord(int x, int y, int length, char[][] letras, char orientacion) {
 		String word = "";
 		
@@ -252,9 +287,17 @@ public class Main {
 		}
 		
 		return word;
-		
 	}
 	
+	/**
+	 * Elimina la palabra de la lista y hace que las letras que queden por encima bajen hasta que no puedan mas
+	 * @param letras
+	 * @param x
+	 * @param y
+	 * @param length
+	 * @param orientacion
+	 * @return
+	 */
 	private static char [][] wordRemove(char [][] letras, int x, int y, int length, char orientacion) {
 		switch (orientacion) {
 		case 'N':
@@ -302,6 +345,10 @@ public class Main {
 		return letras;
 	}
 	
+	/**
+	 * Vuelve a escribir la matriz en la consola
+	 * @param letras
+	 */
 	private static void newGenerate(char[][] letras) {
 		System.out.println("   0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9");
 		for (int i = 0; i<10; i++) {
@@ -314,16 +361,26 @@ public class Main {
 		System.out.println("   0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9");
 		
 	}
-
+	
+	/**
+	 * Transforma el string de coordenadas en 4 chars
+	 * @param coords
+	 * @return
+	 */
 	private static char [] readValue(String coords) {
 		char [] values = new char [4];
 		for(int i=0; i<coords.length(); i++) {
 			values[i] = coords.charAt(i);
 		}
 		return values;
-		
 	}
-
+	
+	/**
+	 * Dependiendo del modo devuelve listaPrueva o listaPalabras
+	 * @param listaPrueba
+	 * @param listaPalabras
+	 * @return
+	 */
 	private static String[] setMode(String[] listaPrueba, String[] listaPalabras) {
 		String[] wordList;
 		char modo = '\0';
@@ -340,8 +397,13 @@ public class Main {
 		return wordList;
 	}
 	
-	private static char[][] generateMatriz(String[] tipoLista) {
-		char [][] matriz = NuevaMatriz.nuevaMatriz (10, 10, tipoLista);
+	/**
+	 * Genera y escribe la matriz inicial en consola
+	 * @param listType
+	 * @return
+	 */
+	private static char[][] generateMatriz(String[] listType) {
+		char [][] matriz = NuevaMatriz.nuevaMatriz (10, 10, listType);
 		System.out.println("   0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9");
 		for (int i = 0; i<matriz[0].length; i++) {
 			System.out.print(i + "|" + " ");

@@ -7,6 +7,10 @@ import java.util.regex.Pattern;
 
 public class MainScanner {
 	
+	/**
+	 * Lee el archivo data y devuelve la puntuacion
+	 * @return
+	 */
 	public static int readFile() {
 		String filepath = "data.txt";
 		int data = 0;
@@ -96,6 +100,11 @@ public class MainScanner {
 		return matcher.matches();
 	}
 	
+	/**
+	 * Verifica si la solicitud de una pista es valida
+	 * @param input
+	 * @return
+	 */
 	private static boolean validateClues(String input) {
 		if (input == null) {
 			return false;
