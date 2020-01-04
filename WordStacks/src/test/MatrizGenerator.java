@@ -56,6 +56,8 @@ public class MatrizGenerator {
 					}
 				}
 				
+			} else {
+				System.out.println("WordCheck: " + addWordCheck);
 			}
 			
 			for (int j = 0; j < numWords; j++) {
@@ -82,85 +84,85 @@ public class MatrizGenerator {
 	/**
 	 * 
 	 * @param matriz 
-	 * @param colIndex numero aleatorio que idica la columna
+	 * @param colIndex numero aleatorio que indica una posicion de columna donde
+	 * empezaria a colocar la palabra
 	 * @param word palabra formada por chars
 	 */
 	private static int addWord(char [][] matriz, int colIndex, char[] word) {
 		Orientation orientation = Orientation.random();
 		log("Orientation = " + orientation.getName());
+		int numRows = matriz.length;
 		int numColumns = matriz[0].length;
 		int wordLength = word.length;
 		int maxRandom = 50;
 		int currentRandom = 0;
 		
 		switch (orientation) {
-		 case N: 
-			 int minRowIndex = getMinRowIndex(matriz, wordLength, colIndex);
-			 while (colIndex - wordLength < minRowIndex) {
-				 colIndex = randomInt(numColumns);
-				 currentRandom++;
-				 if(currentRandom == maxRandom) {
-					 return 0;
+		 case N: {
+				 int maxRowIndex = getMaxRowIndex(matriz, wordLength, colIndex);
+				 while (wordLength >= maxRowIndex) {
+					 colIndex = randomInt(numRows);
+					 maxRowIndex = getMaxRowIndex(matriz, wordLength, colIndex);
+					 if (currentRandom++ == maxRandom) {
+						 return 0;
+					 }
 				 }
-			 }
-			 for (int i = wordLength - 1; i >= minRowIndex; i--) {
-				 matriz[i][colIndex] = word[wordLength - i - 1];
-				 log("i: " + i + " j: "+ colIndex);
+				 for (int i = wordLength - 1; i >= 0; i--) {
+					 assignLetter(matriz, i, colIndex, word[wordLength - i - 1]);
+				 }
 			 }
 			 break;
 		 case S: 
 			 int maxRowIndex = getMaxRowIndex(matriz, wordLength, colIndex);
-			 while (colIndex + wordLength > maxRowIndex) {
-				 colIndex = randomInt(numColumns);
-				 currentRandom++;
-				 if(currentRandom == maxRandom) {
+			 while (wordLength >= maxRowIndex) {
+				 colIndex = randomInt(numRows);
+				 maxRowIndex = getMaxRowIndex(matriz, wordLength, colIndex);
+				 if (currentRandom++ == maxRandom) {
 					 return 0;
 				 }
 			 }
 			 for (int i = 0; i < wordLength; i++) {
-				 matriz[i][colIndex] = word[i];
-				 log("i: " + i + " j: "+ colIndex);
+				 assignLetter(matriz, i, colIndex, word[i]);
 			 }
 			 break;
 		 case E:
 			 int maxColumnIndex = getMaxColumnIndex(matriz, colIndex, numColumns);
-			 while (colIndex + wordLength > maxColumnIndex) {
+			 while (colIndex + wordLength >= maxColumnIndex) {
 				 colIndex = randomInt(numColumns);
-				 currentRandom++;
-				 if(currentRandom == maxRandom) {
+				 maxColumnIndex = getMaxColumnIndex(matriz, colIndex, numColumns);
+				 if (currentRandom++ == maxRandom) {
 					 return 0;
 				 }
 			 }
 			 for (int i = colIndex; i < colIndex + wordLength; i++) {
-				 matriz[0][i] = word[i - colIndex];
-				 log("i: " + i);
+				 assignLetter(matriz, 0, i, word[i - colIndex]);
 			 }
 			 break;
 		 case W:
 			 int minColumnIndex = getMinColumnIndex(matriz, colIndex);
-			 while (colIndex - wordLength < minColumnIndex) {
+			 while (colIndex - wordLength <= minColumnIndex) {
 				 colIndex = randomInt(numColumns);
-				 currentRandom++;
-				 if(currentRandom == maxRandom) {
+				 minColumnIndex = getMinColumnIndex(matriz, colIndex);
+				 if (currentRandom++ == maxRandom) {
 					 return 0;
 				 }
 			 }
 			 for (int i = colIndex; i > colIndex - word.length; i--) {
-				 matriz[0][i] = word[colIndex - i];
-				 log("i: " + i);
+				 assignLetter(matriz, 0, i, word[colIndex - i]);
 			 }
 			 break;
 		 }
 		return 1;
 	}
-	
-	private static int getMinRowIndex(char[][] matriz, int wordLength, int colIndex) {
-		for (int i = 0; i < wordLength; i++) {
-			if(matriz[i][colIndex] != '\0') {
-				return i;
-			}
-		}
-		return 0;
+
+	private static void assignLetter(char[][] matriz, int rowIndex, int colIndex, char letter) {
+		log("Row: " + rowIndex + ", Col: " + colIndex + ", Letter: " + letter);
+		if (matriz[rowIndex][colIndex] != '\0') {
+			 System.out.println("Conflicto en " + matriz[rowIndex][colIndex] + ", Row: " + rowIndex + ", Col: " + colIndex);
+			 System.exit(-1);
+		 }
+		 matriz[rowIndex][colIndex] = letter;
+		 
 	}
 	
 	private static int getMaxRowIndex(char[][] matriz, int wordLength, int colIndex) {
@@ -169,7 +171,7 @@ public class MatrizGenerator {
 				return i;
 			}
 		}
-		return 0;
+		return matriz.length;
 	}
 	
 	private static int getMaxColumnIndex(char [][] matriz, int index, int numColumns) {
@@ -199,7 +201,6 @@ public class MatrizGenerator {
 		
 	private static int[] randOrder(int size) {
 		int[] order = new int [size];
-		order[0] = 0;
 		int check, counter = 0;
 		int count = 0;
 		
@@ -219,7 +220,7 @@ public class MatrizGenerator {
 			
 			if (!exist) {
 				order[count] = check;
-				if (debug) System.out.println(Arrays.toString(order));
+				log(Arrays.toString(order));
 				count ++;
 			}	
 		}
@@ -228,7 +229,6 @@ public class MatrizGenerator {
 	
 	private static int randomInt(int size) {
 		int value = new Random().nextInt(size);
-		//log("Next int: " + value);
 		return value;
 	}
 	
