@@ -28,31 +28,34 @@ public class MatrizGenerator {
 	
 	private static boolean debug = true;
 	
+	private static int counter = 0;
+	
 	public static char [][] generateMatriz(int numColumns, int numRows, String [] wordList) {
 		if (numColumns <= 0 || numRows <= 0) {
 			throw new RuntimeException("Error: dimensiones invalidas");
 		}
 		int numWords = wordList.length;
-		char [][] matriz = new char [numRows][numColumns];
+		final char [][] matriz = new char [numRows][numColumns];
 		char [] charWord;
 		int [] order = randOrder(numWords);
-		int [] colIndexArray = randOrder(numWords);
-		int maxAtemps = 10;
-		boolean restart = true;
+		final int maxAtemps = 10;
 		
 		for (int i = 0; i < numWords; i++) {	
 			charWord = wordToChar(wordList[order[i]]);
 			int addWordCheck;
-			if ((addWordCheck = addWord(matriz, colIndexArray[i], charWord)) == 0) {
+			if ((addWordCheck = addWord(matriz, randomInt(numColumns), charWord)) == 0) {
 				log("WordCheck: " + addWordCheck);
 				int atemps = 0;
-				while (addWord(matriz, randomInt(numWords), charWord) == 0) {
-					addWord(matriz, randomInt(numWords), charWord);
-					atemps++;
-					if (atemps == maxAtemps) {
+				while (addWord(matriz, randomInt(numColumns), charWord) == 0) {
+					addWord(matriz, randomInt(numColumns), charWord);
+					if (atemps++ == maxAtemps) {
 						log("Max attemps reached");
-						restart = false;
-						break;
+						if (counter++ < maxAtemps) {
+							return generateMatriz(numColumns, numRows, wordList);
+						} else {
+							System.out.println("Error general");
+							System.exit(-1);
+						}
 					}
 				}
 				
@@ -61,16 +64,17 @@ public class MatrizGenerator {
 			}
 			
 			for (int j = 0; j < numWords; j++) {
-			gravity(matriz, colIndexArray[i], numRows);
+				gravity(matriz, numRows);
 			}
 			if (debug) {
+				System.out.println("Counter: " + counter);
 				printMatrix(matriz);
 			}
 		}
 		return matriz;
 	}
 	
-	private static void gravity(char[][] matriz, int coords, int numRows) {
+	private static void gravity(char[][] matriz, int numRows) {
 		int numColumns = matriz[0].length;
 		for (int i = 0; i < numRows - 1; i++) {
 			for (int j = 0; j < numColumns; j++) {
@@ -94,24 +98,11 @@ public class MatrizGenerator {
 		int numRows = matriz.length;
 		int numColumns = matriz[0].length;
 		int wordLength = word.length;
-		int maxRandom = 50;
+		final int maxRandom = 50;
 		int currentRandom = 0;
 		
 		switch (orientation) {
-		 case N: {
-				 int maxRowIndex = getMaxRowIndex(matriz, wordLength, colIndex);
-				 while (wordLength >= maxRowIndex) {
-					 colIndex = randomInt(numRows);
-					 maxRowIndex = getMaxRowIndex(matriz, wordLength, colIndex);
-					 if (currentRandom++ == maxRandom) {
-						 return 0;
-					 }
-				 }
-				 for (int i = wordLength - 1; i >= 0; i--) {
-					 assignLetter(matriz, i, colIndex, word[wordLength - i - 1]);
-				 }
-			 }
-			 break;
+		 case N: 
 		 case S: 
 			 int maxRowIndex = getMaxRowIndex(matriz, wordLength, colIndex);
 			 while (wordLength >= maxRowIndex) {
@@ -122,7 +113,10 @@ public class MatrizGenerator {
 				 }
 			 }
 			 for (int i = 0; i < wordLength; i++) {
-				 assignLetter(matriz, i, colIndex, word[i]);
+				 assignLetter(matriz, i, colIndex, 
+						 orientation == Orientation.N ? 
+								 word[wordLength - i - 1] : 
+								 word[i]);
 			 }
 			 break;
 		 case E:
@@ -185,7 +179,7 @@ public class MatrizGenerator {
 	
 	private static int getMinColumnIndex(char[][] matriz, int colIndex) {
 		for (int i = colIndex; i > 0; i--) {
-			if(matriz[0][i] != '\0') {
+			if (matriz[0][i] != '\0') {
 				return i;
 			}
 		}
