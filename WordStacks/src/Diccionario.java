@@ -31,49 +31,46 @@ public class Diccionario {
 		String[] listaRand = new String[10];
 		int[] numsAleatorio = acumularRand(listaNormal.length);
 		
-		for(int i=0;i<listaRand.length;i++) {
+		for (int i = 0; i < listaRand.length; i++) {
 			listaRand[i] = listaNormal[numsAleatorio[i]];
 		}
 	
 		return listaRand;
 	}
+	
 	/**
 	 * Devuelve un int aleatorio entre 0 y x
 	 * @param x
 	 * @return
 	 */
 	private static int randInt(int x) {
-		
-		int rand = (int) Math.floor(Math.random()*x);
+		int rand = (int) Math.floor(Math.random() * x);
 		return rand;
-		
 	}
 	/**
 	 * Devuelve un array de 10 ints aleatorios sin repetirse 
 	 * @param x
 	 * @return
 	 */
-	private static int[]acumularRand(int x){
-		int[] acumular= new int[10];
-		int num=randInt(x);
-		int cont=0;
-		acumular[cont]=num;
-		cont ++;
+	private static int[]acumularRand(int x) {
+		int[] acumular = new int[10];
+		int num = randInt(x);
+		int cont = 0;
+		acumular[cont] = num;
+		cont++;
 		
-		while(cont<10) {
-			num=randInt(x);
-			boolean exist=false;
+		while (cont < 10) {
+			num = randInt(x);
+			boolean exist = false;
 			
-			for(int i=0;i<cont;i++) {
-				
-				if(acumular[i]==num) {
-					exist=true;
+			for (int i = 0; i < cont; i++) {
+				if (acumular[i] == num) {
+					exist = true;
 					break;
 				}
-					
 			}
-			if(!exist) {
-				acumular[cont]=num;
+			if (!exist) {
+				acumular[cont] = num;
 				cont++;
 			}
 		}

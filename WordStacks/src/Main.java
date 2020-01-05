@@ -36,7 +36,6 @@ public class Main {
 		
 			while (wordList.length > 0) { //Mientras queden palabras en la lista el juego continua
 				letras = generateMatriz(wordList); 
-				boolean clueGive = false;
 	
 				while (readableWords(wordList, letras, readableWordList)) { //Mientras haya palabras legibles en la tabla se repite el bucle
 					System.out.println("Introduzca coordenadas o solicite una pista");
@@ -97,6 +96,7 @@ public class Main {
 			System.out.println("Quieres seguir jugando? (escribe si o no)"); 
 			if (MainScanner.readInput(in).equals("si")) { //Si el jugador quiere volver a empezar la partida se repite el primer while y sino se sale del bucle
 				System.out.println("Empezando nueva partida...");
+				continue;
 			} else {
 				System.out.println("Cerrando el juego");
 				break;
@@ -401,7 +401,7 @@ public class Main {
 	 * @return
 	 */
 	private static char[][] generateMatriz(String[] listType) {
-		char [][] matriz = NuevaMatriz.nuevaMatriz (10, 10, listType);
+		char [][] matriz = MatrizGenerator.generateMatriz(10, 10, listType);
 		System.out.println("   0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9");
 		for (int i = 0; i<matriz[0].length; i++) {
 			System.out.print(i + "|" + " ");
