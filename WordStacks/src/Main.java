@@ -14,7 +14,8 @@ public class Main {
 		int x, y, length;
 		int score = 10;
 		char orientacion;
-		char [][] letras = new char[10][10];
+		final int rowSize = 10, colSize = 10;
+		char [][] letras = new char[rowSize][colSize];
 		char [] values = new char[4];
 		
 		Scanner in = new Scanner(System.in);
@@ -35,7 +36,7 @@ public class Main {
 		while (true) { 
 		
 			while (wordList.length > 0) { //Mientras queden palabras en la lista el juego continua
-				letras = generateMatriz(wordList); 
+				letras = generateMatriz(wordList, rowSize, colSize); 
 	
 				while (readableWords(wordList, letras, readableWordList)) { //Mientras haya palabras legibles en la tabla se repite el bucle
 					System.out.println("Introduzca coordenadas o solicite una pista");
@@ -71,6 +72,7 @@ public class Main {
 								break;
 							}else if (i == wordList.length - 1){
 								System.out.println(wordGuess + " no esta en la lista de palabras");
+								score --;
 							}
 						}
 						for (int i = 0; i < readableWordList.length; i++) { //Vaciar todas las palabras legibles para evitar errores
@@ -400,8 +402,8 @@ public class Main {
 	 * @param listType
 	 * @return
 	 */
-	private static char[][] generateMatriz(String[] listType) {
-		char [][] matriz = MatrizGenerator.generateMatriz(10, 10, listType);
+	private static char[][] generateMatriz(String[] listType, int rowSize, int colSize) {
+		char [][] matriz = MatrizGenerator.generateMatriz(rowSize, colSize, listType);
 		System.out.println("   0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9");
 		for (int i = 0; i<matriz[0].length; i++) {
 			System.out.print(i + "|" + " ");
