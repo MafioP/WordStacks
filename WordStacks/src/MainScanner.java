@@ -7,17 +7,21 @@ import java.util.regex.Pattern;
 
 public class MainScanner {
 	
-	public static String readFile() {
+	/**
+	 * Lee el archivo data y devuelve la puntuacion
+	 * @return
+	 */
+	public static int readFile() {
 		String filepath = "data.txt";
-		String data = "";
+		int data = 0;
 		try {
 			Scanner fReader = new Scanner(new File(filepath));
-			data = fReader.nextLine();
+			data = fReader.nextInt();
 			
 			fReader.close();
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			System.out.println("No hay un archivo de puntuaciones anteriores, se creara uno nuevo");
 		}
 		return data;
 	}
@@ -32,7 +36,7 @@ public class MainScanner {
 		String readInput;
 		readInput = in.next();
 		
-		if (readInput.length() <=4 && readInput.length() != 2) {
+		if (readInput.length() <=4) {
 			switch (readInput.length()) {
 				case 4:
 					if (validateCoords(readInput)) {
@@ -48,6 +52,8 @@ public class MainScanner {
 						System.out.println("Pista no valida");
 					}
 					break;
+				case 2:
+					return readInput;
 				default:
 					System.out.println("Caso pendiente");
 				}
@@ -94,6 +100,11 @@ public class MainScanner {
 		return matcher.matches();
 	}
 	
+	/**
+	 * Verifica si la solicitud de una pista es valida
+	 * @param input
+	 * @return
+	 */
 	private static boolean validateClues(String input) {
 		if (input == null) {
 			return false;
